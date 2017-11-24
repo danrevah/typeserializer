@@ -1,0 +1,32 @@
+{
+  "name": "property-exclusion",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp unit-tests",
+    "compile": "ntsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danrevah/property-exclusion.git"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "Dan Revah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danrevah/property-exclusion/issues"
+  },
+  "homepage": "https://github.com/danrevah/property-exclusion#readme",
+  "devDependencies": {
+    "@types/node": "^8.0.53",
+    "chai": "4.1.2",
+    "mocha": "4.0.1",
+    "ntypescript": "1.201706190042.1"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.10"
+  }
+}
