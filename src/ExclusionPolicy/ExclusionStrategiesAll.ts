@@ -1,6 +1,6 @@
 
 import 'reflect-metadata';
-import {ExposeSymbol} from './consts';
+import {ExclusionStrategies, ExclusionStrategiesSymbol, ExposeSymbol} from './consts';
 
 export function ExclusionStrategiesAll (c: any): any {
 
@@ -8,6 +8,8 @@ export function ExclusionStrategiesAll (c: any): any {
 
     constructor(...args: any[]) {
       super(...args);
+
+      Reflect.defineMetadata(ExclusionStrategiesSymbol, ExclusionStrategies.All, this);
 
       const exposed = Reflect.getMetadata(ExposeSymbol, this) || [];
 

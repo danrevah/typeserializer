@@ -1,24 +1,25 @@
 
-import {ExclusionStrategies} from './ExclusionPolicy/consts';
+// import {ExclusionStrategies} from './ExclusionPolicy/consts';
 import {TypeSerializer} from './ExclusionPolicy/index';
-import {Expose} from './PropertiesDecorators/Expose';
+// import {Expose} from './PropertiesDecorators/Expose';
 import {Groups} from './PropertiesDecorators/Groups';
 import {serialize} from './ExclusionPolicy/Serializer';
+import {Exclude} from './PropertiesDecorators/Exclude';
 
 export {TypeSerializer, ExclusionStrategies} from './ExclusionPolicy';
 export {Expose} from './PropertiesDecorators/Expose';
 export {Groups} from './PropertiesDecorators/Groups';
 export {serialize} from './ExclusionPolicy/Serializer';
+export {Exclude} from './PropertiesDecorators/Exclude';
 
-@TypeSerializer(ExclusionStrategies.All)
+@TypeSerializer()
 class Test {
 
-  @Expose()
-  @Groups(['also'])
+  @Exclude()
+  @Groups(['perfect'])
   abc = '1';
 
-  @Expose()
-  @Groups(['perfect'])
+  @Groups(['also'])
   def = '2';
 
   @Groups(['perfect', 'also'])
