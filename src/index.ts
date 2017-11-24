@@ -3,12 +3,12 @@ import {ExclusionStrategies} from './ExclusionPolicy/consts';
 import {TypeSerializer} from './ExclusionPolicy/index';
 import {Expose} from './PropertiesDecorators/Expose';
 import {Groups} from './PropertiesDecorators/Groups';
-import {serialize} from './ExclusionPolicy/serializer';
+import {serialize} from './ExclusionPolicy/Serializer';
 
 export {TypeSerializer, ExclusionStrategies} from './ExclusionPolicy';
 export {Expose} from './PropertiesDecorators/Expose';
 export {Groups} from './PropertiesDecorators/Groups';
-export {serialize} from './ExclusionPolicy/serializer';
+export {serialize} from './ExclusionPolicy/Serializer';
 
 @TypeSerializer(ExclusionStrategies.All)
 class Test {
