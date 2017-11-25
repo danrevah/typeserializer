@@ -88,7 +88,7 @@
 
 #### Express Integration
  
- It's not a must to use with Express if you use it as explained earlier, but if you would like to use it with an annotation instead.
+It's suggested to use the annotation `@TypeSerializerResponse` while working with Express.
  
  1. Add a middleware BEFORE the routes:
  
@@ -102,7 +102,7 @@
 
  2. Example of usage:
  
-user.entity.ts:
+`user.entity.ts:`
 
 ```typescript
  import {TypeSerializer, Expose, ExclusionStrategies, Groups, serialize} from 'typeserializer';
@@ -125,7 +125,7 @@ user.entity.ts:
 ```
 
 
-user.ctrl.ts:
+`user.ctrl.ts:`
 
 *IMPORTANT*: you should use `tsJson` instead of `json` in order to use TypeSerializer.
  
