@@ -1,6 +1,6 @@
 
 import 'reflect-metadata';
-import {ExcludeSymbol, ExclusionStrategies, ExclusionStrategiesSymbol} from './consts';
+import {ExcludeSymbol, ExclusionStrategies, ExclusionStrategiesSymbol} from '../consts';
 
 export function ExclusionStrategiesNone (c: any): any {
 

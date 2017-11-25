@@ -1,6 +1,6 @@
 
 import 'reflect-metadata';
-import {ExcludeSymbol, ExclusionStrategies, ExclusionStrategiesSymbol, ExposeSymbol, GroupsSymbol} from './consts';
+import {ExcludeSymbol, ExclusionStrategies, ExclusionStrategiesSymbol, ExposeSymbol, GroupsSymbol} from '../consts';
 
 export function serialize(object: any, groupNames: string[] = []) {
 
@@ -16,12 +16,11 @@ export function serialize(object: any, groupNames: string[] = []) {
   return Object.getOwnPropertyNames(object).reduce((json: any, propertyKey: string) => {
 
     if (strategy === ExclusionStrategies.All &&
-        properties.indexOf(propertyKey) > -1 &&
+      (properties.length === 0 || properties.indexOf(propertyKey) > -1) &&
         exposed.find((e: any) => e.propertyKey === propertyKey)) {
       json[propertyKey] = object[propertyKey];
     }
-    else if (strategy === ExclusionStrategies.None &&
-        properties.indexOf(propertyKey) > -1 &&
+    else if ((properties.length === 0 || properties.indexOf(propertyKey) > -1) &&
         !excluded.find((e: any) => e.propertyKey === propertyKey)) {
       json[propertyKey] = object[propertyKey];
     }

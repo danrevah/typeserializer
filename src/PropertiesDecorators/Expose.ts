@@ -1,5 +1,5 @@
 
-import {ExposeSymbol} from '../ExclusionPolicy/consts';
+import {ExposeSymbol} from '../consts';
 
 export function Expose() {
   return function (target: any, propertyKey: string) {

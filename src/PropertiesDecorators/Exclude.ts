@@ -1,5 +1,5 @@
 
-import {ExcludeSymbol} from '../ExclusionPolicy/consts';
+import {ExcludeSymbol} from '../consts';
 
 export function Exclude() {
   return function (target: any, propertyKey: string) {

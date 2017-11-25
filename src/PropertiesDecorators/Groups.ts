@@ -1,5 +1,5 @@
 
-import {GroupsSymbol} from '../ExclusionPolicy/consts';
+import {GroupsSymbol} from '../consts';
 
 export function Groups(groups: string[]) {
 
