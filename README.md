@@ -127,7 +127,7 @@ It's suggested to use the annotation `@TypeSerializerResponse` while working wit
 
 `user.ctrl.ts:`
 
-*IMPORTANT*: you should use `tsJson` instead of `json` in order to use TypeSerializer.
+**IMPORTANT**: you should use `tsJson` instead of `json` in order to use TypeSerializer.
  
 ```typescript
 import {TypeSerializerResponse} from 'typeserializer';
@@ -137,7 +137,7 @@ class UserCtrl {
    @TypeSerializerResponse(['user-account'])
    static getAccountDetails(req, res) {
      const user = new User();
-     return res.status(418).tsJson(a); // it's possible to use `status` or other methods  that was used in combination with `json` before.
+     return res.status(418).tsJson(a); // prints: '{ username: 'Dan' }'
    }
  }
  
