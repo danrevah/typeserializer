@@ -11,6 +11,7 @@
     - [Manual Exclude](#manual-exclude)
     - [Exclude All](#exclude-all)
     - [Groups](#groups)
+    - [Deep Objects](#deep-objects)
  - [Express Integration](#express-integration)
  
 ## Installation
@@ -96,6 +97,48 @@ Go to the [Express Integration](#express-integration) section.
  console.log(serialize(user, ['user-details'])); // prints: '{ age: 28 }'
  console.log(serialize(user, ['user-account', 'user-details'])); // prints: '{ username: 'Dan', age: 28 }'
 ````
+
+### Deep Objects
+
+TypeSerializer can also serialize deep objects. 
+
+```typescript
+ import {TypeSerializer, Expose, ExclusionStrategies, Groups, serialize} from 'typeserializer';
+
+@TypeSerializer(ExclusionStrategies.All)
+class UserDetails {
+
+  @Expose()
+  @Groups(['name'])
+  firstName = 'Dan';
+
+  @Expose()
+  @Groups(['name'])
+  lastName = 'Revah';
+
+  @Expose()
+  @Groups(['other'])
+  age = 28; 
+}
+
+ @TypeSerializer(ExclusionStrategies.All)
+ class User {
+ 
+   @Expose()
+   @Groups(['user-account'])
+   username = 'Dan';
+ 
+   @Expose()
+   @Groups(['user-details'])
+   details = new UserDetails();
+ 
+   password = 'foo';
+ }
+ 
+ console.log(serialize(user, ['user-details'])); // prints: { details: { firstName: 'Dan', lastName: 'Revah', age: 28 } }
+ console.log(serialize(user, ['user-details', 'name'])); // prints: { details: { firstName: 'Dan', lastName: 'Revah' } }
+ console.log(serialize(user, ['user-details', 'other'])); // prints: { details: { age: 28 } }
+```
 
 #### Express Integration
  
