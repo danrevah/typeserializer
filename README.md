@@ -1,5 +1,7 @@
 # TypeSerializer
 
+[![Build Status](https://travis-ci.org/danrevah/typeserializer.svg?branch=master)](https://travis-ci.org/danrevah/typeserializer)
+
 > Serializer designed to make prettier code while using exclusion strategies on objects.  
 
 ## Table of contents
