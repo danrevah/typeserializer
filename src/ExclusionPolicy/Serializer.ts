@@ -20,7 +20,8 @@ export function serialize(object: any, groupNames: string[] = []) {
         exposed.find((e: any) => e.propertyKey === propertyKey)) {
       json[propertyKey] = object[propertyKey];
     }
-    else if ((properties.length === 0 || properties.indexOf(propertyKey) > -1) &&
+    else if (strategy === ExclusionStrategies.None &&
+        (properties.length === 0 || properties.indexOf(propertyKey) > -1) &&
         !excluded.find((e: any) => e.propertyKey === propertyKey)) {
       json[propertyKey] = object[propertyKey];
     }

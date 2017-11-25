@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "gulp unit-tests",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "compile": "ntsc"
   },
   "repository": {
@@ -21,10 +21,15 @@
   },
   "homepage": "https://github.com/danrevah/typeserializer#readme",
   "devDependencies": {
+    "@types/chai": "^4.0.5",
+    "@types/mocha": "^2.2.44",
     "@types/node": "^8.0.53",
-    "chai": "4.1.2",
-    "mocha": "4.0.1",
-    "ntypescript": "1.201706190042.1"
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "ntypescript": "1.201706190042.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1",
+    "wrappy": "^1.0.2"
   },
   "dependencies": {
     "reflect-metadata": "^0.1.10"
