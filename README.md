@@ -7,8 +7,6 @@
 ## Table of contents
 
  - [Installation](#installation)
- - [Contributing](#contributing)
- - [Changelog](CHANGELOG.md)
  - [Strategies](#strategies)
     - [Manual Exclude](#manual-exclude)
     - [Exclude All](#exclude-all)
