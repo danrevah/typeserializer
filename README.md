@@ -18,7 +18,7 @@
 #### Manual Exclude
  
  While using the manual exclude you only need to decorate the class with the `@TypeSerializer` annotation.
- Now, every property will be INCLUDED in the response, unless you manually `@Exclude` then with the annotation.
+ Now, every property will be INCLUDED in the response, unless you manually `@Exclude` them with the annotation.
  
  
 ```typescript
