@@ -42,7 +42,7 @@
  While using the `all` as the exclusion strategy it excludes all properties except for the ones who marked as `@Exposed()`.
  
 ```typescript
- import {TypeSerializer, Expose} from 'typeserializer';
+ import {TypeSerializer, Expose, ExclusionStrategies} from 'typeserializer';
 
  @TypeSerializer(ExclusionStrategies.All)
  class SomeObject {
@@ -62,7 +62,7 @@
  You can expose different properties by using the `@Groups` annotation.
  
 ```typescript
- import {TypeSerializer, Expose, Groups, serialize} from 'typeserializer';
+ import {TypeSerializer, Expose, ExclusionStrategies, Groups, serialize} from 'typeserializer';
 
  @TypeSerializer(ExclusionStrategies.All)
  class User {
@@ -105,7 +105,7 @@
 user.entity.ts:
 
 ```typescript
- import {TypeSerializer, Expose, Groups, serialize} from 'typeserializer';
+ import {TypeSerializer, Expose, ExclusionStrategies, Groups, serialize} from 'typeserializer';
 
  // Defining an object
  
