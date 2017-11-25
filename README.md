@@ -1,6 +1,6 @@
 # TypeSerializer
 
-> Serializer designed to make prettier code while using exclusion strategies on objects. 
+> Serializer designed to make prettier code while using exclusion strategies on objects.  
 
 ## Table of contents
 
