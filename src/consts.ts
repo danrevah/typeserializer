@@ -6,7 +6,6 @@ export const ExposeSymbol = Symbol('Expose');
 export const ExcludeSymbol = Symbol('Exclude');
 export const GroupsSymbol = Symbol('Groups');
 export const ExclusionStrategiesSymbol = Symbol('ExclusionStrategies');
-export const JsonResponseSymbol = Symbol('JsonResponse');
 export const ExclusionStrategies = {
   All: ExclusionStrategiesAll,
   None: ExclusionStrategiesNone
