@@ -13,6 +13,17 @@
     - [Groups](#groups)
  - [Express Integration](#express-integration)
  
+## Installation
+
+Install using npm: 
+
+```
+ $ npm install typeserializer --save
+```
+
+If you're using Express you can also use an additional decorator, to make your controllers look nicer.
+Go to the [Express Integration](#express-integration) section.
+
 ### Strategies
 
 #### Manual Exclude
