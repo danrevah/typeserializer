@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "test": "NODE_ENV=test mocha -r ts-node/register src/**/*.spec.ts",
+    "cover": "NODE_ENV=test nyc npm t && nyc report --reporter=lcov",
     "compile": "ntsc"
   },
   "repository": {
@@ -25,13 +26,29 @@
     "@types/mocha": "^2.2.44",
     "@types/node": "^8.0.53",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
     "mocha": "^4.0.1",
     "ntypescript": "1.201706190042.1",
+    "nyc": "^11.3.0",
     "ts-node": "^3.3.0",
     "typescript": "^2.6.1",
     "wrappy": "^1.0.2"
   },
   "dependencies": {
     "reflect-metadata": "^0.1.10"
+  },
+  "nyc": {
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "json",
+      "html"
+    ],
+    "all": true
   }
 }

@@ -5,3 +5,5 @@ node_js:
   - 8
   - 7
   - 6
+
+after_success: cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
