@@ -12,8 +12,9 @@
     - [Exclude All](#exclude-all)
     - [Groups](#groups)
     - [Deep Objects](#deep-objects)
+    - [Version](#version)
  - [Express Integration](#express-integration)
- 
+
 ## Installation
 
 Install using npm: 
@@ -140,6 +141,40 @@ class UserDetails {
  console.log(serialize(user, ['user-details', 'other'])); // prints: { details: { age: 28 } }
 ```
 
+#### Version
+
+You can also serialize property by version number with @Before & @After.
+
+```typescript
+ import {TypeSerializer, Expose, ExclusionStrategies, serialize, Before, After} from 'typeserializer';
+
+ @TypeSerializer(ExclusionStrategies.All)
+ class UserDetails {
+ 
+   @Expose()
+   @Before('1.2.0')
+   firstName = 'Dan';
+ 
+   @Expose()
+   @Before('1.2.0')
+   lastName = 'Revah';
+ 
+   @Expose()
+   @After('1.2.0')
+   fullName = 'Dan Revah';
+ }
+ 
+ const user = new UserDetails();
+ console.log(user); // prints: '{ firstName: 'Dan', lastName: 'Revah', fullName: 'Dan Revah' }'
+ 
+ console.log(serialize(user, [], { version: '0.4.2' })); // prints: '{ firstName: 'Dan', lastName: 'Revah' }'
+ console.log(serialize(user, [], { version: '1.1.9' })); // prints: '{ firstName: 'Dan', lastName: 'Revah' }'
+ 
+ console.log(serialize(user, [], { version: '1.2.0' })); // prints: '{ fullName: 'Dan Revah' }'
+ console.log(serialize(user, [], { version: '1.3.0' })); // prints: '{ fullName: 'Dan Revah' }'
+```
+
+
 #### Express Integration
  
 It's suggested to use the annotation `@TypeSerializerResponse` while working with Express.
@@ -152,6 +187,9 @@ It's suggested to use the annotation `@TypeSerializerResponse` while working wit
     // ... 
     
     app.use(TypeSerializerMiddleware());
+    
+    // OR with a version number to use with @Before & @After
+    app.use(TypeSerializerMiddleware({ version: '1.0.2' }));
 ```
 
  2. Example of usage:

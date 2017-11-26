@@ -8,17 +8,21 @@ import {Expose} from '../PropertiesDecorators/Expose';
 import {serialize} from './Serializer';
 import {Groups} from '../PropertiesDecorators/Groups';
 import {Exclude} from '../PropertiesDecorators/Exclude';
+import {Before} from '../PropertiesDecorators/Before';
+import {After} from '../PropertiesDecorators/After';
 
 @TypeSerializer(ExclusionStrategies.All)
 class FooTypeAll {
 
   @Expose()
+  @Before('1.2.0')
   @Groups(['foo-group'])
   prop = 'prop';
 
   prop2 = 'prop2';
 
   @Expose()
+  @After('1.2.0')
   @Groups(['bar-group'])
   prop3 = 'prop3';
 }
@@ -161,6 +165,18 @@ describe('Serializer', () => {
       fooNone: {
         prop2: 'prop2'
       }
+    });
+  });
+
+  it('should serialize objects before & after version', () => {
+    const foo = new FooTypeAll();
+
+    expect(serialize(foo, [], {version: '1.1.9'})).to.deep.equal({
+      prop: 'prop'
+    });
+
+    expect(serialize(foo, [], {version: '1.2.0'})).to.deep.equal({
+      prop3: 'prop3'
     });
   });
 

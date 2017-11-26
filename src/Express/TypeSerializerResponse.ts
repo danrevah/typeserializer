@@ -6,8 +6,8 @@ export function TypeSerializerResponse(groupNames: string[]) {
     let method = <Function>descriptor.value;
 
     descriptor.value = function () {
-      const [context, a] = method.apply(this, arguments);
-      return context.json(serialize(a, groupNames));
+      const [context, a, options] = method.apply(this, arguments);
+      return context.json(serialize(a, groupNames, options));
     }
   };
 }
