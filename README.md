@@ -255,7 +255,7 @@ class UserCtrl {
    @TypeSerializerResponse(['user-account'])
    static getAccountDetails(req, res) {
      const user = new User();
-     return res.status(418).tsJson(a); // prints: '{ username: 'Dan' }'
+     return res.status(418).tsJson(user); // prints: '{ username: 'Dan' }'
    }
  }
  
