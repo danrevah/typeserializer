@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha -r ts-node/register src/**/*.spec.ts",
-    "cover": "NODE_ENV=test nyc npm t && nyc report --reporter=lcov",
+    "cover": "NODE_ENV=test nyc npm t && nyc report --reporter=text-lcov",
     "compile": "ntsc"
   },
   "repository": {

@@ -6,4 +6,6 @@ node_js:
   - 7
   - 6
 
-after_success: cat ./coverage/lcov.info | coveralls
+after_success: 
+  - npm run cover
+  - cat ./coverage/lcov.info | coveralls
