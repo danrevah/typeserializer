@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/danrevah/typeserializer.svg?branch=master)](https://travis-ci.org/danrevah/typeserializer) [![Coverage Status](https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg?branch=master)](https://coveralls.io/github/danrevah/typeserializer?branch=master)
 
-> Serializer designed to make prettier code while using exclusion strategies on objects.  
+> TypeSerializer, designed to make prettier code while using exclusion strategies on objects.  
 
 ## Table of contents
 
@@ -24,7 +24,7 @@ Install using npm:
  $ npm install typeserializer --save
 ```
 
-If you're using Express you can also use an additional decorator, to make your controllers look nicer.
+If you're using Express you can also use an additional decorator, to make your controllers look cleaner.
 Go to the [Express Integration](#express-integration) section.
 
 ### Strategies
@@ -32,7 +32,7 @@ Go to the [Express Integration](#express-integration) section.
 #### Manual Exclude
  
  While using the manual exclude you only need to decorate the class with the `@TypeSerializer` annotation.
- Now, every property will be INCLUDED in the response, unless you manually `@Exclude` them with the annotation.
+ This will cause the property to be INCLUDED in the response, unless you manually `@Exclude` them.
  
  
 ```typescript
@@ -53,7 +53,7 @@ Go to the [Express Integration](#express-integration) section.
 
 #### Exclude All
  
- While using the `all` as the exclusion strategy it excludes all properties except for the ones who marked as `@Exposed()`.
+ Using `all` as the exclusion strategy will exclude all properties except for those marked as `@Exposed()`.
  
 ```typescript
  import {TypeSerializer, Expose, ExclusionStrategies} from 'typeserializer';
@@ -144,7 +144,7 @@ class UserDetails {
 
 #### Version
 
-You can also serialize property by version number with @Before & @After.
+You can also serialize a property by version number with @Before & @After.
 
 ```typescript
  import {TypeSerializer, Expose, ExclusionStrategies, serialize, Before, After} from 'typeserializer';
@@ -177,7 +177,7 @@ You can also serialize property by version number with @Before & @After.
 
 #### Dynamic Exclusion
 
-If you would like to use a dynamic approach as an exclusion strategy, you could then use the dynamic exclusion.
+If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
 
 ```typescript
  function validator(object: any, propertyKey: string) {
