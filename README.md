@@ -1,6 +1,6 @@
 # TypeSerializer
 
-[![Build Status](https://travis-ci.org/danrevah/typeserializer.svg?branch=master)](https://travis-ci.org/danrevah/typeserializer)
+[![Build Status](https://travis-ci.org/danrevah/typeserializer.svg?branch=master)](https://travis-ci.org/danrevah/typeserializer) [![Coverage Status](https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg?branch=master)](https://coveralls.io/github/danrevah/typeserializer?branch=master)
 
 > Serializer designed to make prettier code while using exclusion strategies on objects.  
 
