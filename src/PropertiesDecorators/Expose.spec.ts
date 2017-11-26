@@ -23,8 +23,8 @@ describe('Expose', () => {
     const metadata = Reflect.getMetadata(ExposeSymbol, foo);
 
     expect(metadata).to.deep.equal([
-      { propertyKey: 'prop' },
-      { propertyKey: 'prop3' }
+      { propertyKey: 'prop', fn: undefined },
+      { propertyKey: 'prop3', fn: undefined }
     ]);
   });
 

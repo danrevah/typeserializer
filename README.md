@@ -13,6 +13,7 @@
     - [Groups](#groups)
     - [Deep Objects](#deep-objects)
     - [Version](#version)
+    - [Dynamic Exclusin](#dynamic-exclusion)
  - [Express Integration](#express-integration)
 
 ## Installation
@@ -174,6 +175,31 @@ You can also serialize property by version number with @Before & @After.
  console.log(serialize(user, [], { version: '1.3.0' })); // prints: '{ fullName: 'Dan Revah' }'
 ```
 
+#### Dynamic Exclusion
+
+If you would like to use a dynamic approach as an exclusion strategy, you could then use the dynamic exclusion.
+
+```typescript
+ function validator(object: any, propertyKey: string) {
+   return propertyKey === 'prop';
+ }
+ 
+ @TypeSerializer(ExclusionStrategies.All)
+ class Foo {
+ 
+   @Expose(validator)
+   prop = 'prop';
+ 
+   @Expose(validator)
+   prop2 = 'prop2';
+ 
+   @Expose(validator)
+   prop3 = 'prop3';
+ }
+ 
+ const foo = new Foo();
+ console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
+``` 
 
 #### Express Integration
  

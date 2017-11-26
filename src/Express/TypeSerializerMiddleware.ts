@@ -1,5 +1,5 @@
 
-import {MiddlewareOptions} from './model';
+import {MiddlewareOptions} from './models';
 
 export function TypeSerializerMiddleware(options: MiddlewareOptions = {}) {
   return function (req: any, res: any, next: Function) {

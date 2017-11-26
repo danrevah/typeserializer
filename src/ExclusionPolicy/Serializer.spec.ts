@@ -57,7 +57,35 @@ class WrapperDeep {
   fooNone: FooTypeNone;
 }
 
+function validator(object: any, propertyKey: string) {
+  return propertyKey === 'prop';
+}
 
+@TypeSerializer()
+class FooWithFnExclude {
+
+  @Exclude(validator)
+  prop = 'prop';
+
+  @Exclude(validator)
+  prop2 = 'prop2';
+
+  @Exclude(validator)
+  prop3 = 'prop3';
+}
+
+@TypeSerializer(ExclusionStrategies.All)
+class FooWithFnExpose {
+
+  @Expose(validator)
+  prop = 'prop';
+
+  @Expose(validator)
+  prop2 = 'prop2';
+
+  @Expose(validator)
+  prop3 = 'prop3';
+}
 
 describe('Serializer', () => {
 
@@ -177,6 +205,23 @@ describe('Serializer', () => {
 
     expect(serialize(foo, [], {version: '1.2.0'})).to.deep.equal({
       prop3: 'prop3'
+    });
+  });
+
+  it('should serialize to the object exclude by function', () => {
+    const foo = new FooWithFnExclude();
+
+    expect(serialize(foo)).to.deep.equal({
+      prop2: 'prop2',
+      prop3: 'prop3'
+    });
+  });
+
+  it('should serialize to the object exclude by function', () => {
+    const foo = new FooWithFnExpose();
+
+    expect(serialize(foo)).to.deep.equal({
+      prop: 'prop'
     });
   });
 

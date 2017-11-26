@@ -6,7 +6,7 @@ import {
   GroupsSymbol
 } from '../consts';
 import {isObject, versionCompare} from '../helpers';
-import {MiddlewareOptions} from '../Express/model';
+import {MiddlewareOptions} from '../Express/models';
 
 export function serialize(object: any, groupNames: string[] = [], options: MiddlewareOptions = {}) {
 
@@ -27,8 +27,8 @@ export function serialize(object: any, groupNames: string[] = [], options: Middl
 
     const value = object[propertyKey];
 
-    if (isExclusionStrategyAllAndPropertyExposed(strategy, exposed, propertyKey, properties) ||
-        isExclusionStrategyNoneAndPropertyNotExcluded(strategy, excluded, propertyKey, properties)) {
+    if (isExclusionStrategyAllAndPropertyExposed(strategy, exposed, propertyKey, properties, object) ||
+        isExclusionStrategyNoneAndPropertyNotExcluded(strategy, excluded, propertyKey, properties, object)) {
       json[propertyKey] = isObject(value) ? serialize(value, groupNames) : value;
     }
     else if (strategy !== ExclusionStrategies.All && strategy !== ExclusionStrategies.None) {
@@ -60,14 +60,22 @@ function isVersionMatch(beforeList: any[], afterList: any[], version: string | u
   return true;
 }
 
-function isExclusionStrategyAllAndPropertyExposed(strategy: any, exposed: string[], propertyKey: string, properties: string[]) {
-  return strategy === ExclusionStrategies.All &&
-    (properties.length === 0 || properties.indexOf(propertyKey) > -1) &&
-    exposed.find((e: any) => e.propertyKey === propertyKey);
+function isExclusionStrategyAllAndPropertyExposed(strategy: any, exposed: string[], propertyKey: string, properties: string[], object: any) {
+  if (strategy === ExclusionStrategies.All &&
+    (properties.length === 0 || properties.indexOf(propertyKey) > -1)) {
+    const elm: any = exposed.find((e: any) => e.propertyKey === propertyKey);
+    return elm && elm.fn ? elm.fn(object, propertyKey) : elm;
+  }
+
+  return false;
 }
 
-function isExclusionStrategyNoneAndPropertyNotExcluded(strategy: any, excluded: string[], propertyKey: string, properties: string[]) {
-  return strategy === ExclusionStrategies.None &&
-    (properties.length === 0 || properties.indexOf(propertyKey) > -1) &&
-    !excluded.find((e: any) => e.propertyKey === propertyKey);
+function isExclusionStrategyNoneAndPropertyNotExcluded(strategy: any, excluded: string[], propertyKey: string, properties: string[], object: any) {
+  if (strategy === ExclusionStrategies.None &&
+    (properties.length === 0 || properties.indexOf(propertyKey) > -1)) {
+    const elm: any = excluded.find((e: any) => e.propertyKey === propertyKey);
+    return elm && elm.fn ? !elm.fn(object, propertyKey) : !elm;
+  }
+
+  return false;
 }

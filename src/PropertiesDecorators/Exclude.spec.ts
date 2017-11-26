@@ -3,7 +3,7 @@ import {Exclude} from './Exclude';
 import {expect} from 'chai';
 import 'reflect-metadata';
 import 'mocha';
-import {ExcludeSymbol} from "../consts";
+import {ExcludeSymbol} from '../consts';
 
 class Foo {
 
@@ -23,8 +23,8 @@ describe('Exclude', () => {
     const metadata = Reflect.getMetadata(ExcludeSymbol, foo);
 
     expect(metadata).to.deep.equal([
-      { propertyKey: 'prop' },
-      { propertyKey: 'prop3' }
+      { propertyKey: 'prop', fn: undefined},
+      { propertyKey: 'prop3', fn: undefined }
     ]);
   });
 
