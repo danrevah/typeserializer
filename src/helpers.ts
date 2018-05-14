@@ -36,17 +36,9 @@ export function versionCompare(v1: any, v2: any, options: any = {}) {
     if (v1parts[i] == v2parts[i]) {
       continue;
     }
-    else if (v1parts[i] > v2parts[i]) {
-      return 1;
-    }
-    else {
-      return -1;
-    }
+
+    return (v1parts[i] > v2parts[i]) ? 1 : -1;
   }
 
-  if (v1parts.length != v2parts.length) {
-    return -1;
-  }
-
-  return 0;
+  return (v1parts.length === v2parts.length) ? 0 : -1;
 }
