@@ -2,6 +2,7 @@
 import 'mocha';
 import {expect} from 'chai';
 import {Expose} from './Expose';
+import {serialize} from '../Serializer/Serializer';
 
 class Foo {
 
@@ -20,7 +21,7 @@ describe('Expose', () => {
     const foo = new Foo();
 
 
-    expect(foo.toString()).to.equal('');
+    expect(serialize(foo)).to.equal('{"prop2":"prop2"}');
   });
 
 });
