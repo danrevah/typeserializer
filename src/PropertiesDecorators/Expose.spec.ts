@@ -6,11 +6,12 @@ import {serialize} from '../Serializer/Serializer';
 import {Groups} from './Groups';
 import {Before} from './Before';
 import {After} from './After';
+import {Name} from './Name';
 
 class Foo {
 
   @Before('1.2.0')
-  @Expose({ name: 'foo' })
+  @Name('foo')
   prop: string = 'prop';
 
   @After('1.0.0')
@@ -21,8 +22,8 @@ class Foo {
 
 class Bar {
 
-  @Expose({ name: 'bar' })
   @Groups(['special'])
+  @Name('bar')
   prop: string = 'prop';
 
   prop2: string = 'prop2';
@@ -40,7 +41,7 @@ class Bar {
 
 class TwoLevels {
 
-  @Expose({name: 'barClass' })
+  @Name('barClass')
   @Groups(['special'])
   bar: Bar;
 

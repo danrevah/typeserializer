@@ -1,4 +1,4 @@
-import {AfterSymbol, BeforeSymbol, ExcludeSymbol, ExposeSymbol, GroupsSymbol} from '../consts';
+import {AfterSymbol, BeforeSymbol, ExcludeSymbol, ExposeSymbol, GroupsSymbol, NameSymbol} from '../consts';
 import {versionCompare} from '../helpers';
 
 export function serialize(obj: any, groups?: string[], version?: string) {
@@ -12,9 +12,10 @@ function transform(obj: any, groups?: string[], version?: string) {
   const groupsMap = Reflect.getMetadata(GroupsSymbol, obj) || {};
   const beforeMap = Reflect.getMetadata(BeforeSymbol, obj) || {};
   const afterMap = Reflect.getMetadata(AfterSymbol, obj) || {};
+  const nameMap = Reflect.getMetadata(NameSymbol, obj) || {};
 
   return Object.getOwnPropertyNames(obj).reduce((json: any, key: string) => {
-    const name = exposeMap[key] && exposeMap[key].name ? exposeMap[key].name : key;
+    const name = nameMap[key] || key;
 
     if (shouldAdd(excludeMap, exposeMap, beforeMap, afterMap, groupsMap, key, groups, version)) {
       if (typeof obj[key] === 'object') {
