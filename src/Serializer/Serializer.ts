@@ -8,13 +8,16 @@ export function serialize(obj: any) {
   return Object.getOwnPropertyNames(obj).reduce((json: any, key: string) => {
 
     if (excludeMap.hasOwnProperty(key) && typeof excludeMap[key] !== 'undefined') {
-      return excludeMap[key]() ?
+      if (!excludeMap[key].call(null)) {
+        json[key] = obj[key];
+      }
     }
-    else if (excludeMap.hasOwnProperty(key)) {
 
+    if (!excludeMap.hasOwnProperty(key)) {
+      json[key] = obj[key];
     }
 
-    json[key] = obj[key];
+
     return json;
   }, {});
 }
