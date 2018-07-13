@@ -81,9 +81,9 @@ describe('Expose', () => {
 
   it('should expose properties while serializing with version', () => {
     const foo = new Foo();
-    expect(serialize(foo, undefined, '1.1.0')).to.equal('{"foo":"prop","prop2":"prop2","prop3":"prop3"}');
-    expect(serialize(foo, undefined, '1.3.0')).to.equal('{"prop2":"prop2","prop3":"prop3"}');
-    expect(serialize(foo, undefined, '0.9.0')).to.equal('{"foo":"prop","prop3":"prop3"}');
+    expect(serialize(foo, [], '1.1.0')).to.equal('{"foo":"prop","prop2":"prop2","prop3":"prop3"}');
+    expect(serialize(foo, [], '1.3.0')).to.equal('{"prop2":"prop2","prop3":"prop3"}');
+    expect(serialize(foo, [], '0.9.0')).to.equal('{"foo":"prop","prop3":"prop3"}');
   });
 
   it('should expose properties while serializing class with functions', () => {
