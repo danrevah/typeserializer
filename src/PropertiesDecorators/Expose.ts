@@ -1,9 +1,12 @@
-import {ClassStateSymbol} from '../consts';
+// import {ClassStateSymbol} from '../consts';
 
-export function Expose(fn?: Function) {
-  return (target: any, propertyKey: string) => {
-    const state = Reflect.getMetadata(ClassStateSymbol, target) || [];
-    Object.defineProperty(target, propertyKey, { enumerable: false, writable: true });
-    console.log(state);
+export function Expose() {
+  return function (target: any, propertyKey: string) {
+    let descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
+    if (descriptor.enumerable != false) {
+      descriptor.enumerable = false;
+      descriptor.writable = true;
+      Object.defineProperty(target, propertyKey, descriptor);
+    }
   };
 }
