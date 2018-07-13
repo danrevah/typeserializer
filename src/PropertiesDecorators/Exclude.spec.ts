@@ -3,7 +3,6 @@ import 'mocha';
 import {expect} from 'chai';
 import {Exclude} from './Exclude';
 import {serialize} from '../Serializer/Serializer';
-import {expect} from "chai";
 
 class Foo {
 
@@ -20,7 +19,7 @@ describe('Exclude', () => {
 
   it('should exclude properties while serializing', () => {
     const foo = new Foo();
-    expect(serialize(foo)).to.equal('');
+    expect(serialize(foo)).to.equal('{"prop2":"prop2"}');
   });
 
 });
