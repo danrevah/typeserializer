@@ -1,9 +1,7 @@
 
-import {Expose} from './Expose';
-import {expect} from 'chai';
-import 'reflect-metadata';
 import 'mocha';
-import {ExposeSymbol} from "../consts";
+import {expect} from 'chai';
+import {Expose} from './Expose';
 
 class Foo {
 
@@ -20,12 +18,9 @@ describe('Expose', () => {
 
   it('should add metadata to the object expose list with the specific property', () => {
     const foo = new Foo();
-    const metadata = Reflect.getMetadata(ExposeSymbol, foo);
 
-    expect(metadata).to.deep.equal([
-      { propertyKey: 'prop', fn: undefined },
-      { propertyKey: 'prop3', fn: undefined }
-    ]);
+
+    expect(foo.toString()).to.equal('');
   });
 
 });
