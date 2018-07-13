@@ -1,3 +1,3 @@
 import 'reflect-metadata';
 
-export const ClassStateSymbol = Symbol('ClassState');
+export const ExposeSymbol = Symbol('ExposeSymbol');

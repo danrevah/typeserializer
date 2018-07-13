@@ -1,12 +1,10 @@
-// import {ClassStateSymbol} from '../consts';
+import {ExposeSymbol} from '../consts';
 
 export function Expose() {
-  return function (target: any, propertyKey: string) {
-    let descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
-    if (descriptor.enumerable != false) {
-      descriptor.enumerable = false;
-      descriptor.writable = true;
-      Object.defineProperty(target, propertyKey, descriptor);
-    }
+  return function<T> (target: T, key: keyof T) {
+    Reflect.defineMetadata(ExposeSymbol, true, target);
+    const metadata = Reflect.getMetadata(ExposeSymbol, target);
+    console.log(metadata);
+
   };
 }
