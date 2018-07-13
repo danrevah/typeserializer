@@ -3,6 +3,7 @@ import 'mocha';
 import {expect} from 'chai';
 import {Expose} from './Expose';
 import {serialize} from '../Serializer/Serializer';
+import {Groups} from './Groups';
 
 class Foo {
 
@@ -17,6 +18,7 @@ class Foo {
 class Bar {
 
   @Expose({ name: 'bar' })
+  @Groups(['special'])
   prop: string = 'prop';
 
   prop2: string = 'prop2';
@@ -34,7 +36,8 @@ class Bar {
 
 class TwoLevels {
 
-  @Expose({name: 'barClass'})
+  @Expose({name: 'barClass' })
+  @Groups(['special'])
   bar: Bar;
 
   constructor() {
@@ -45,6 +48,8 @@ class TwoLevels {
 
 class ThreeLevels {
 
+  @Expose()
+  @Groups(['special'])
   twoLevels: TwoLevels;
 
   constructor() {
@@ -54,6 +59,8 @@ class ThreeLevels {
 
 class FourLevels {
 
+  @Expose()
+  @Groups(['special'])
   threeLevels: ThreeLevels;
 
   constructor() {
@@ -73,6 +80,16 @@ describe('Expose', () => {
     expect(serialize(bar)).to.equal('{"bar":"prop","prop2":"prop2","prop3":"prop3"}');
   });
 
+  it('should expose properties while serializing class with group', () => {
+    const bar = new Bar();
+    expect(serialize(bar, ['special'])).to.equal('{"bar":"prop"}');
+  });
+
+  it('should not expose properties while serializing class with group who does not exist', () => {
+    const bar = new Bar();
+    expect(serialize(bar, ['other'])).to.equal('{}');
+  });
+
   it('should expose properties while serializing class with two level hierarchy', () => {
     const twoLevels = new TwoLevels();
     expect(serialize(twoLevels)).to.equal('{"barClass":{"bar":"prop-changed","prop2":"prop2","prop3":"prop3"}}');
@@ -86,6 +103,11 @@ describe('Expose', () => {
   it('should expose properties while serializing class with three level hierarchy', () => {
     const fourLevels = new FourLevels();
     expect(serialize(fourLevels)).to.equal('{"threeLevels":{"twoLevels":{"barClass":{"bar":"prop-changed","prop2":"prop2","prop3":"prop3"}}}}');
+  });
+
+  it('should expose properties while serializing class with three level hierarchy and group', () => {
+    const fourLevels = new FourLevels();
+    expect(serialize(fourLevels, ['special'])).to.equal('{"threeLevels":{"twoLevels":{"barClass":{"bar":"prop-changed"}}}}');
   });
 
 });
