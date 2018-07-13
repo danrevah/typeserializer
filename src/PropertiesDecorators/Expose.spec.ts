@@ -43,6 +43,24 @@ class TwoLevels {
   }
 }
 
+class ThreeLevels {
+
+  twoLevels: TwoLevels;
+
+  constructor() {
+    this.twoLevels = new TwoLevels();
+  }
+}
+
+class FourLevels {
+
+  threeLevels: ThreeLevels;
+
+  constructor() {
+    this.threeLevels = new ThreeLevels();
+  }
+}
+
 describe('Expose', () => {
 
   it('should expose properties while serializing', () => {
@@ -55,9 +73,19 @@ describe('Expose', () => {
     expect(serialize(bar)).to.equal('{"bar":"prop","prop2":"prop2","prop3":"prop3"}');
   });
 
-  it('should expose properties while serializing class with hierarchy', () => {
+  it('should expose properties while serializing class with two level hierarchy', () => {
     const twoLevels = new TwoLevels();
-    expect(serialize(twoLevels)).to.equal('{"barClass":{"prop":"prop-changed","prop2":"prop2","prop3":"prop3"}}');
+    expect(serialize(twoLevels)).to.equal('{"barClass":{"bar":"prop-changed","prop2":"prop2","prop3":"prop3"}}');
+  });
+
+  it('should expose properties while serializing class with three level hierarchy', () => {
+    const threeLevels = new ThreeLevels();
+    expect(serialize(threeLevels)).to.equal('{"twoLevels":{"barClass":{"bar":"prop-changed","prop2":"prop2","prop3":"prop3"}}}');
+  });
+
+  it('should expose properties while serializing class with three level hierarchy', () => {
+    const fourLevels = new FourLevels();
+    expect(serialize(fourLevels)).to.equal('{"threeLevels":{"twoLevels":{"barClass":{"bar":"prop-changed","prop2":"prop2","prop3":"prop3"}}}}');
   });
 
 });
