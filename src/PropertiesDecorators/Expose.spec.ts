@@ -18,7 +18,7 @@ describe('Expose', () => {
 
   it('should expose properties while serializing', () => {
     const foo = new Foo();
-    expect(serialize(foo)).to.equal('');
+    expect(serialize(foo)).to.equal('{"bar":"prop","prop2":"prop2","prop3":"prop3"}');
   });
 
 });
