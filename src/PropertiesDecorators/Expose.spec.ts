@@ -4,12 +4,16 @@ import {expect} from 'chai';
 import {Expose} from './Expose';
 import {serialize} from '../Serializer/Serializer';
 import {Groups} from './Groups';
+import {Before} from './Before';
+import {After} from './After';
 
 class Foo {
 
+  @Before('1.2.0')
   @Expose({ name: 'foo' })
   prop: string = 'prop';
 
+  @After('1.0.0')
   prop2: string = 'prop2';
 
   prop3: string = 'prop3';
@@ -73,6 +77,13 @@ describe('Expose', () => {
   it('should expose properties while serializing', () => {
     const foo = new Foo();
     expect(serialize(foo)).to.equal('{"foo":"prop","prop2":"prop2","prop3":"prop3"}');
+  });
+
+  it('should expose properties while serializing with version', () => {
+    const foo = new Foo();
+    expect(serialize(foo, undefined, '1.1.0')).to.equal('{"foo":"prop","prop2":"prop2","prop3":"prop3"}');
+    expect(serialize(foo, undefined, '1.3.0')).to.equal('{"prop2":"prop2","prop3":"prop3"}');
+    expect(serialize(foo, undefined, '0.9.0')).to.equal('{"foo":"prop","prop3":"prop3"}');
   });
 
   it('should expose properties while serializing class with functions', () => {
