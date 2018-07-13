@@ -1,2 +1,2 @@
 
-export {Expose} from './PropertiesDecorators/Expose';
+export {Exclude} from './PropertiesDecorators/Exclude';
