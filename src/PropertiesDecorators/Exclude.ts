@@ -3,7 +3,7 @@ import {PropertyConfig} from './interfaces';
 
 export function Exclude(config?: PropertyConfig) {
   return function<T> (target: T, key: keyof T) {
-    const list = Reflect.getMetadata(ExcludeSymbol, target) || [];
-    Reflect.defineMetadata(ExcludeSymbol, list.concat({key, config}), target);
+    const obj = Reflect.getMetadata(ExcludeSymbol, target) || {};
+    Reflect.defineMetadata(ExcludeSymbol, {...obj, ...{[key]: config}}, target);
   };
 }
