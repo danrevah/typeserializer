@@ -1,9 +1,9 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "lib": ["es5"],
+        "lib": ["es2016"],
         "outDir": "./dist",
-        "target": "es5",
+        "target": "es2016",
         "module": "commonjs",
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
