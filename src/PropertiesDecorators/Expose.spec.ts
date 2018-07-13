@@ -1,24 +1,22 @@
 
 import 'mocha';
 import {expect} from 'chai';
-import {Exclude} from './Exclude';
+import {Expose} from './Expose';
 import {serialize} from '../Serializer/Serializer';
-import {expect} from "chai";
 
 class Foo {
 
-  @Exclude()
+  @Expose({ name: 'bar' })
   prop: string = 'prop';
 
   prop2: string = 'prop2';
 
-  @Exclude()
   prop3: string = 'prop3';
 }
 
-describe('Exclude', () => {
+describe('Expose', () => {
 
-  it('should exclude properties while serializing', () => {
+  it('should expose properties while serializing', () => {
     const foo = new Foo();
     expect(serialize(foo)).to.equal('');
   });
