@@ -1,3 +1,3 @@
 import 'reflect-metadata';
 
-export const ExposeSymbol = Symbol('ExposeSymbol');
+export const ExcludeSymbol = Symbol('ExcludeSymbol');

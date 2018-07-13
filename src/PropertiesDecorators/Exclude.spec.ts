@@ -1,21 +1,21 @@
 
 import 'mocha';
 import {expect} from 'chai';
-import {Expose} from './Expose';
+import {Exclude} from './Exclude';
 import {serialize} from '../Serializer/Serializer';
 
 class Foo {
 
-  @Expose()
+  @Exclude()
   prop: any;
 
   prop2: any;
 
-  @Expose()
+  @Exclude()
   prop3: any;
 }
 
-describe('Expose', () => {
+describe('Exclude', () => {
 
   it('should add metadata to the object expose list with the specific property', () => {
     const foo = new Foo();
