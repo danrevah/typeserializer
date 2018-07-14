@@ -1,12 +1,12 @@
 
 import 'mocha';
 import {expect} from 'chai';
-import {Expose} from './Expose';
-import {serialize} from '../Serializer/Serializer';
-import {Groups} from './Groups';
-import {Before} from './Before';
-import {After} from './After';
-import {Name} from './Name';
+import {Expose} from '../PropertiesDecorators/Expose';
+import {serialize} from './Serializer';
+import {Groups} from '../PropertiesDecorators/Groups';
+import {Before} from '../PropertiesDecorators/Before';
+import {After} from '../PropertiesDecorators/After';
+import {Name} from '../PropertiesDecorators/Name';
 
 class Foo {
 

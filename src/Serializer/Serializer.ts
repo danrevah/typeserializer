@@ -1,7 +1,6 @@
 import {AfterSymbol, BeforeSymbol, ExcludeSymbol, ExposeSymbol, GroupsSymbol, NameSymbol} from '../consts';
 import {versionCompare} from '../helpers';
 
-// @TODO: 1. Move tests from `Expose.spec.ts` to `Serializer.spec.ts`
 // @TODO: 2. Make tests like previous in `master` branch in all of the decorators to check if symbol exists
 // @TODO: 3. Set an `Exclusion Strategy` decorator, and in `serialize` function (both..)
 // @TODO: 4. Set a dynamic exclusion / inclusion in the `@Exclude & @Expose` decorators.
