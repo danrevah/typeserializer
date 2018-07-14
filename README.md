@@ -1,6 +1,7 @@
 # TypeSerializer
 
 <p align="center">
+<br/>
 <a href="https://www.npmjs.com/package/typeserializer"><img src="https://img.shields.io/npm/v/typeserializer.svg?style=flat-square" alt="npm"></a>
 <a href="https://travis-ci.org/danrevah/typeserializer"><img src="https://travis-ci.org/danrevah/typeserializer.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/github/danrevah/typeserializer?branch=master"><img src="https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg?branch=master" alt="Coverage Status"></a>
