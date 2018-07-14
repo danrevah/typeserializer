@@ -1,11 +1,13 @@
-import {AfterSymbol, BeforeSymbol, ExcludeSymbol, ExposeSymbol, GroupsSymbol, NameSymbol} from '../consts';
+import {
+  AfterSymbol, BeforeSymbol, ExcludeSymbol, ExclusionPolicy, ExposeSymbol, GroupsSymbol, NameSymbol,
+  StrategySymbol
+} from '../consts';
 import {isObject, versionCompare} from '../helpers';
 
-// @TODO: 1. Set an `Exclusion Strategy` decorator, and in `serialize` function (both..)
-// @TODO: 2. Set a dynamic exclusion / inclusion in the `@Exclude & @Expose` decorators.
-// @TODO: 3. Type decorator
-// @TODO: 4. Deserialize
-// @TODO: 5. Array serialize make sure it also supports deserialize them properly! exclude and everything..
+// @TODO: 1. Set a dynamic exclusion / inclusion in the `@Exclude & @Expose` decorators.
+// @TODO: 2. Type decorator
+// @TODO: 3. Deserialize
+// @TODO: 4. Array serialize make sure it also supports deserialize them properly! exclude and everything..
 // @TODO: 5. Array deserialize make sure it also supports deserialize them properly! exclude and everything..
 
 export function serialize(obj: any, groups?: string[], version?: string) {
@@ -20,11 +22,12 @@ function transform(obj: any, groups?: string[], version?: string) {
   const beforeMap = Reflect.getMetadata(BeforeSymbol, obj) || {};
   const afterMap = Reflect.getMetadata(AfterSymbol, obj) || {};
   const nameMap = Reflect.getMetadata(NameSymbol, obj) || {};
+  const strategy = Reflect.getMetadata(StrategySymbol, obj.constructor);
 
   return Object.getOwnPropertyNames(obj).reduce((json: any, key: string) => {
     const name = nameMap[key] || key;
 
-    if (shouldAdd(excludeMap, exposeMap, beforeMap, afterMap, groupsMap, key, groups, version)) {
+    if (shouldAdd(excludeMap, exposeMap, beforeMap, afterMap, groupsMap, strategy, key, groups, version)) {
       if (isObject(obj[key])) {
         json[name] = transform(obj[key], groups);
       } else {
@@ -37,10 +40,14 @@ function transform(obj: any, groups?: string[], version?: string) {
 }
 
 function shouldAdd(
-  excludeMap: any, exposeMap: any, beforeMap: any, afterMap: any,
-  groupsMap: any, key: string, groups?: string[], version?: string
+  excludeMap: any, exposeMap: any, beforeMap: any, afterMap: any, groupsMap: any,
+  strategy: ExclusionPolicy, key: string, groups?: string[], version?: string
 ) {
   const propGroups = groupsMap && groupsMap[key] ? groupsMap[key] : [];
+
+  if (strategy === ExclusionPolicy.ALL && !exposeMap.hasOwnProperty(key)) {
+    return false;
+  }
 
   if (excludeMap.hasOwnProperty(key)) {
     return false;

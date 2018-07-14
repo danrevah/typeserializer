@@ -7,6 +7,8 @@ import {Groups} from '../PropertiesDecorators/Groups';
 import {Before} from '../PropertiesDecorators/Before';
 import {After} from '../PropertiesDecorators/After';
 import {Name} from '../PropertiesDecorators/Name';
+import {Strategy} from '../ClassDecorators/Strategy';
+import {ExclusionPolicy} from '../consts';
 
 class Foo {
 
@@ -73,6 +75,23 @@ class FourLevels {
   }
 }
 
+@Strategy(ExclusionPolicy.ALL)
+class User {
+
+  @Expose()
+  @Groups(['personal'])
+  firstName: string = 'Dan';
+
+  @Expose()
+  @Groups(['personal'])
+  lastName: string = 'Revah';
+
+  @Expose()
+  username: string = 'danrevah';
+
+  password: string = '123456';
+}
+
 describe('Expose', () => {
 
   it('should expose properties while serializing', () => {
@@ -122,4 +141,13 @@ describe('Expose', () => {
     expect(serialize(fourLevels, ['special'])).to.equal('{"threeLevels":{"twoLevels":{"barClass":{"bar":"prop-changed"}}}}');
   });
 
+  it('should expose only exposed properties while exclusion policy is set to ALL', () => {
+    const user = new User();
+    expect(serialize(user)).to.equal('{"firstName":"Dan","lastName":"Revah","username":"danrevah"}');
+  });
+
+  it('should expose only exposed properties while exclusion policy is set to ALL and show current group', () => {
+    const user = new User();
+    expect(serialize(user, ['personal'])).to.equal('{"firstName":"Dan","lastName":"Revah"}');
+  });
 });
