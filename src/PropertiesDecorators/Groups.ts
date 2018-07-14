@@ -1,6 +1,6 @@
-import {GroupsSymbol} from '../consts';
-import {createDecorator} from './Decorator';
+import { GroupsSymbol } from "../consts";
+import { createDecorator } from "./Decorator";
 
 export function Groups(groups: string[]) {
-  return createDecorator('Groups', GroupsSymbol, groups);
+  return createDecorator("Groups", GroupsSymbol, groups);
 }

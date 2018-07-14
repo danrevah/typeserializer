@@ -1,8 +1,14 @@
 import {
-  AfterSymbol, BeforeSymbol, ExcludeSymbol, ExclusionPolicy,
-  ExposeSymbol, GroupsSymbol, NameSymbol, StrategySymbol
-} from '../consts';
-import {isObject, versionCompare} from '../helpers';
+  AfterSymbol,
+  BeforeSymbol,
+  ExcludeSymbol,
+  ExclusionPolicy,
+  ExposeSymbol,
+  GroupsSymbol,
+  NameSymbol,
+  StrategySymbol,
+} from "../consts";
+import { isObject, versionCompare } from "../helpers";
 
 export function serialize(obj: any, groups?: string[], version?: string) {
   if (Array.isArray(obj)) {
@@ -14,10 +20,8 @@ export function serialize(obj: any, groups?: string[], version?: string) {
 
 // -- Private --
 function transformArray(arr: any[], groups?: string[], version?: string): any {
-  return arr.map((elm: any) =>
-    (Array.isArray(elm))
-      ? transformArray(elm, groups, version)
-      : transform(elm, groups, version)
+  return arr.map(
+    (elm: any) => (Array.isArray(elm) ? transformArray(elm, groups, version) : transform(elm, groups, version))
   );
 }
 
@@ -48,13 +52,20 @@ function transform(obj: any, groups?: string[], version?: string) {
 }
 
 function shouldAdd(
-  obj: any, excludeMap: any, exposeMap: any, beforeMap: any, afterMap: any, groupsMap: any,
-  strategy: ExclusionPolicy, key: string, groups?: string[], version?: string
+  obj: any,
+  excludeMap: any,
+  exposeMap: any,
+  beforeMap: any,
+  afterMap: any,
+  groupsMap: any,
+  strategy: ExclusionPolicy,
+  key: string,
+  groups?: string[],
+  version?: string
 ) {
   const propGroups = groupsMap && groupsMap[key] ? groupsMap[key] : [];
 
-  if (strategy === ExclusionPolicy.ALL &&
-    (!exposeMap.hasOwnProperty(key) || !exposeMap[key].call(null, obj, key))) {
+  if (strategy === ExclusionPolicy.ALL && (!exposeMap.hasOwnProperty(key) || !exposeMap[key].call(null, obj, key))) {
     return false;
   }
 

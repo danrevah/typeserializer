@@ -1,7 +1,7 @@
-import {isUndefined} from '../helpers';
+import { isUndefined } from "../helpers";
 
 export function createDecorator(name: string, keySymbol: Symbol, value: any) {
-  return function<T> (target: T, key: keyof T) {
+  return function<T>(target: T, key: keyof T) {
     const obj = Reflect.getMetadata(keySymbol, target) || {};
 
     if (!isUndefined(obj[key])) {
@@ -10,6 +10,6 @@ export function createDecorator(name: string, keySymbol: Symbol, value: any) {
       );
     }
 
-    Reflect.defineMetadata(keySymbol, {...obj, ...{[key]: value}}, target);
+    Reflect.defineMetadata(keySymbol, { ...obj, ...{ [key]: value } }, target);
   };
 }

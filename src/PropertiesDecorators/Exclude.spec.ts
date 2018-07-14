@@ -1,37 +1,31 @@
-
-import 'mocha';
-import {expect} from 'chai';
-import {Exclude} from './Exclude';
-import {ExcludeSymbol} from '../consts';
+import "mocha";
+import { expect } from "chai";
+import { Exclude } from "./Exclude";
+import { ExcludeSymbol } from "../consts";
 
 class Foo {
+  @Exclude() prop = "prop";
 
-  @Exclude()
-  prop = 'prop';
+  prop2 = "prop2";
 
-  prop2 = 'prop2';
-
-  @Exclude()
-  prop3 = 'prop3';
+  @Exclude() prop3 = "prop3";
 }
 
 function declareClass() {
   class tmp {
-
-    prop = 'prop';
-    prop2 = 'prop2';
+    prop = "prop";
+    prop2 = "prop2";
 
     @Exclude()
     @Exclude()
-    prop3 = 'prop3';
+    prop3 = "prop3";
   }
 
   return tmp;
 }
 
-describe('Exclude', () => {
-
-  it('should add metadata to the object exclude list with the specific property', () => {
+describe("Exclude", () => {
+  it("should add metadata to the object exclude list with the specific property", () => {
     const foo = new Foo();
     const metadata = Reflect.getMetadata(ExcludeSymbol, foo);
 
@@ -39,8 +33,7 @@ describe('Exclude', () => {
     expect(metadata.prop3()).to.equal(true);
   });
 
-  it('should not add metadata twice, it should throws an exception instead', () => {
-    expect(declareClass).to.throw('Cannot apply @Exclude decorator twice on property \'prop3\' of class \'tmp\'.');
+  it("should not add metadata twice, it should throws an exception instead", () => {
+    expect(declareClass).to.throw("Cannot apply @Exclude decorator twice on property 'prop3' of class 'tmp'.");
   });
-
 });
