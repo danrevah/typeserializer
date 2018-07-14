@@ -1,9 +1,6 @@
-# TypeSerializer
-
 
 <p align="center">
-<img 
-    src="assets/ngx-logo.png" width="160" border="0" alt="NGX-PIPES">
+<h1>TypeSerializer</h1>
 <br/><br/>
 <a href="https://www.npmjs.com/package/typeserializer"><img src="https://img.shields.io/npm/v/typeserializer.svg?style=flat-square" alt="npm"></a>
 <a href="https://travis-ci.org/danrevah/typeserializer"><img src="https://travis-ci.org/danrevah/typeserializer.svg?branch=master" alt="Build Status"></a>
@@ -13,8 +10,6 @@
  Useful pipes for Angular with no external dependencies
 <br/><br/>
 </p>
-
-[![]()]()
 
 TypeSerializer, designed to make prettier code while using exclusion strategies on objects.  
 
