@@ -4,11 +4,10 @@ import {
 } from '../consts';
 import {isObject, versionCompare} from '../helpers';
 
-// @TODO: 1. Set a dynamic exclusion / inclusion in the `@Exclude & @Expose` decorators.
-// @TODO: 2. Type decorator
-// @TODO: 3. Deserialize
-// @TODO: 4. Array serialize make sure it also supports deserialize them properly! exclude and everything..
-// @TODO: 5. Array deserialize make sure it also supports deserialize them properly! exclude and everything..
+// @TODO: 1. Type decorator
+// @TODO: 2. Deserialize
+// @TODO: 3. Array serialize make sure it also supports deserialize them properly! exclude and everything..
+// @TODO: 4. Array deserialize make sure it also supports deserialize them properly! exclude and everything..
 
 export function serialize(obj: any, groups?: string[], version?: string) {
   return JSON.stringify(transform(obj, groups, version));
