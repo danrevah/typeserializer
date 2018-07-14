@@ -1,17 +1,17 @@
 
 import 'mocha';
 import {expect} from 'chai';
-import {Exclude} from './Exclude';
-import {ExcludeSymbol} from '../consts';
+import {Expose} from './Expose';
+import {ExposeSymbol} from '../consts';
 
 class Foo {
 
-  @Exclude()
+  @Expose()
   prop = 'prop';
 
   prop2 = 'prop2';
 
-  @Exclude()
+  @Expose()
   prop3 = 'prop3';
 }
 
@@ -21,19 +21,19 @@ function declareClass() {
     prop = 'prop';
     prop2 = 'prop2';
 
-    @Exclude()
-    @Exclude()
+    @Expose()
+    @Expose()
     prop3 = 'prop3';
   }
 
   return tmp;
 }
 
-describe('Exclude', () => {
+describe('Expose', () => {
 
-  it('should add metadata to the object exclude list with the specific property', () => {
+  it('should add metadata to the object expose list with the specific property', () => {
     const foo = new Foo();
-    const metadata = Reflect.getMetadata(ExcludeSymbol, foo);
+    const metadata = Reflect.getMetadata(ExposeSymbol, foo);
 
     expect(metadata).to.deep.equal({
       prop: true,
@@ -42,7 +42,7 @@ describe('Exclude', () => {
   });
 
   it('should not add metadata twice, it should throws an exception instead', () => {
-    expect(declareClass).to.throw('Cannot apply @Exclude decorator twice on property \'prop3\' of class \'tmp\'.');
+    expect(declareClass).to.throw('Cannot apply @Expose decorator twice on property \'prop3\' of class \'tmp\'.');
   });
 
 });
