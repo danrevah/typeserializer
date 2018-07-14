@@ -200,5 +200,8 @@ describe('Expose', () => {
     expect(serialize(foo)).to.equal(
       '{"barClass":[{"bar":"prop","prop2":"prop2","prop3":"prop3"},{"bar":"prop","prop2":"prop2","prop3":"prop3"}]}'
     );
+    expect(serialize(foo, ['special'])).to.equal(
+      '{"barClass":[{"bar":"prop"},{"bar":"prop"}]}'
+    );
   });
 });
