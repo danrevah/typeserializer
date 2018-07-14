@@ -48,7 +48,7 @@ Changing name of a selected property is supported by using the `@Name` decorator
 
 #### Manual Exclude
  
- While using the default manual exclude you only need to decorate the properties you like to exclude with `@Exclude`.``
+ While using the default manual exclude you only need to decorate the properties you like to exclude with `@Exclude`.
  This will cause the property to be EXCLUDED from the response.
  
  
