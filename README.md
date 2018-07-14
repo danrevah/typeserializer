@@ -6,11 +6,9 @@
 <a href="https://coveralls.io/github/danrevah/typeserializer?branch=master"><img src="https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg?branch=master" alt="Coverage Status"></a>
 <a href="https://github.com/danrevah/typeserializer/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT licensed"></a>
 <br/><br/>
- Useful pipes for Angular with no external dependencies
+TypeSerializer, designed to make prettier code while using exclusion strategies on objects. 
 <br/><br/>
-</p>
-
-TypeSerializer, designed to make prettier code while using exclusion strategies on objects.  
+</p> 
 
 ## Table of contents
 
