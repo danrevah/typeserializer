@@ -1,12 +1,12 @@
 {
   "name": "typeserializer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha -r ts-node/register src/*.spec.ts src/**/*.spec.ts",
     "cover": "NODE_ENV=test nyc npm t && nyc report --reporter=text-lcov",
-    "build:lib": "ntsc",
+    "build:lib": "rm -rf dist && ntsc",
     "deploy": "npm run build:lib && cp package.json dist/package.json && npm publish --access=public dist"
   },
   "repository": {
