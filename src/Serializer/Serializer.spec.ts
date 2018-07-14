@@ -95,7 +95,7 @@ class User {
 @Strategy(ExclusionPolicy.ALL)
 class DynamicFoo {
 
-  @Expose(() => true)
+  @Expose((obj: any, key: string): any => key === 'prop')
   prop: string = 'prop';
 
   @Expose(() => false)

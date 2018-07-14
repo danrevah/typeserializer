@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/danrevah/typeserializer.svg?branch=master)](https://travis-ci.org/danrevah/typeserializer) [![Coverage Status](https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg?branch=master)](https://coveralls.io/github/danrevah/typeserializer?branch=master)
 
-> TypeSerializer, designed to make prettier code while using exclusion strategies on objects.  
+TypeSerializer, designed to make prettier code while using exclusion strategies on objects.  
 
 ## Table of contents
 
@@ -13,8 +13,7 @@
     - [Groups](#groups)
     - [Deep Objects](#deep-objects)
     - [Version](#version)
-    - [Dynamic Exclusin](#dynamic-exclusion)
- - [Express Integration](#express-integration)
+    - [Dynamic Exclusion](#dynamic-exclusion)
 
 ## Installation
 
@@ -24,21 +23,17 @@ Install using npm:
  $ npm install typeserializer --save
 ```
 
-If you're using Express you can also use an additional decorator, to make your controllers look cleaner.
-Go to the [Express Integration](#express-integration) section.
-
 ### Strategies
 
 #### Manual Exclude
  
- While using the manual exclude you only need to decorate the class with the `@TypeSerializer` annotation.
- This will cause the property to be INCLUDED in the response, unless you manually `@Exclude` them.
+ While using the default manual exclude you only need to decorate the properties you like to exclude with `@Exclude`.``
+ This will cause the property to be EXCLUDED from the response.
  
  
 ```typescript
- import {TypeSerializer, Exclude} from 'typeserializer';
+ import {serialize, Exclude} from 'typeserializer';
 
- @TypeSerializer()
  class SomeObject {
  
    foo = 'foo';
@@ -48,7 +43,7 @@ Go to the [Express Integration](#express-integration) section.
  }
  
  const obj = new SomeObject();
- console.log(obj); // prints: '{ foo: 'foo' }'
+ console.log(serialize(obj)); // prints: '{ foo: 'foo' }'
 ````
 
 #### Exclude All
@@ -56,9 +51,9 @@ Go to the [Express Integration](#express-integration) section.
  Using `all` as the exclusion strategy will exclude all properties except for those marked as `@Exposed()`.
  
 ```typescript
- import {TypeSerializer, Expose, ExclusionStrategies} from 'typeserializer';
+ import {serialize, Expose, Strategy, ExclusionPolicy} from 'typeserializer';
 
- @TypeSerializer(ExclusionStrategies.All)
+ @Strategy(ExclusionPolicy.ALL)
  class SomeObject {
  
    foo = 'foo';
@@ -68,7 +63,7 @@ Go to the [Express Integration](#express-integration) section.
  }
  
  const obj = new SomeObject();
- console.log(obj); // prints: '{ bar: 'bar' }'
+ console.log(serialize(obj)); // prints: '{ bar: 'bar' }'
 ````
 
 #### Groups
@@ -76,9 +71,9 @@ Go to the [Express Integration](#express-integration) section.
  You can expose different properties by using the `@Groups` annotation.
  
 ```typescript
- import {TypeSerializer, Expose, ExclusionStrategies, Groups, serialize} from 'typeserializer';
+ import {Strategy, Expose, ExclusionPolicy, Groups, serialize} from 'typeserializer';
 
- @TypeSerializer(ExclusionStrategies.All)
+ @Strategy(ExclusionPolicy.ALL)
  class User {
  
    @Expose()
@@ -93,8 +88,7 @@ Go to the [Express Integration](#express-integration) section.
  }
  
  const user = new User();
- console.log(user); // prints: '{ username: 'Dan', age: 28 }'
- 
+ console.log(serialize(user)); // prints: '{ username: 'Dan', age: 28 }'
  console.log(serialize(user, ['user-account'])); // prints: '{ username: 'Dan' }'
  console.log(serialize(user, ['user-details'])); // prints: '{ age: 28 }'
  console.log(serialize(user, ['user-account', 'user-details'])); // prints: '{ username: 'Dan', age: 28 }'
@@ -105,9 +99,9 @@ Go to the [Express Integration](#express-integration) section.
 TypeSerializer can also serialize deep objects. 
 
 ```typescript
- import {TypeSerializer, Expose, ExclusionStrategies, Groups, serialize} from 'typeserializer';
+ import {Strategy, Expose, ExclusionPolicy, Groups, serialize} from 'typeserializer';
 
-@TypeSerializer(ExclusionStrategies.All)
+@Strategy(ExclusionPolicy.ALL)
 class UserDetails {
 
   @Expose()
@@ -123,7 +117,7 @@ class UserDetails {
   age = 28; 
 }
 
- @TypeSerializer(ExclusionStrategies.All)
+@Strategy(ExclusionPolicy.ALL)
  class User {
  
    @Expose()
@@ -137,6 +131,7 @@ class UserDetails {
    password = 'foo';
  }
  
+ const user = new User();
  console.log(serialize(user, ['user-details'])); // prints: { details: { firstName: 'Dan', lastName: 'Revah', age: 28 } }
  console.log(serialize(user, ['user-details', 'name'])); // prints: { details: { firstName: 'Dan', lastName: 'Revah' } }
  console.log(serialize(user, ['user-details', 'other'])); // prints: { details: { age: 28 } }
@@ -147,9 +142,9 @@ class UserDetails {
 You can also serialize a property by version number with @Before & @After.
 
 ```typescript
- import {TypeSerializer, Expose, ExclusionStrategies, serialize, Before, After} from 'typeserializer';
+ import {Strategy, Expose, ExclusionPolicy, serialize, Before, After} from 'typeserializer';
 
- @TypeSerializer(ExclusionStrategies.All)
+@Strategy(ExclusionPolicy.ALL)
  class UserDetails {
  
    @Expose()
@@ -166,13 +161,13 @@ You can also serialize a property by version number with @Before & @After.
  }
  
  const user = new UserDetails();
- console.log(user); // prints: '{ firstName: 'Dan', lastName: 'Revah', fullName: 'Dan Revah' }'
+ console.log(serialize(user)); // prints: '{ firstName: 'Dan', lastName: 'Revah', fullName: 'Dan Revah' }'
  
- console.log(serialize(user, [], { version: '0.4.2' })); // prints: '{ firstName: 'Dan', lastName: 'Revah' }'
- console.log(serialize(user, [], { version: '1.1.9' })); // prints: '{ firstName: 'Dan', lastName: 'Revah' }'
+ console.log(serialize(user, [], '0.4.2')); // prints: '{ firstName: 'Dan', lastName: 'Revah' }'
+ console.log(serialize(user, [], '1.1.9')); // prints: '{ firstName: 'Dan', lastName: 'Revah' }'
  
- console.log(serialize(user, [], { version: '1.2.0' })); // prints: '{ fullName: 'Dan Revah' }'
- console.log(serialize(user, [], { version: '1.3.0' })); // prints: '{ fullName: 'Dan Revah' }'
+ console.log(serialize(user, [], '1.2.0')); // prints: '{ fullName: 'Dan Revah' }'
+ console.log(serialize(user, [], '1.3.0')); // prints: '{ fullName: 'Dan Revah' }'
 ```
 
 #### Dynamic Exclusion
@@ -180,11 +175,13 @@ You can also serialize a property by version number with @Before & @After.
 If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
 
 ```typescript
+import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
+
  function validator(object: any, propertyKey: string) {
    return propertyKey === 'prop';
  }
  
- @TypeSerializer(ExclusionStrategies.All)
+@Strategy(ExclusionPolicy.ALL)
  class Foo {
  
    @Expose(validator)
@@ -200,67 +197,3 @@ If you would like to use a dynamic approach as an exclusion strategy, you can al
  const foo = new Foo();
  console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
 ``` 
-
-#### Express Integration
- 
-It's suggested to use the annotation `@TypeSerializerResponse` while working with Express.
- 
- 1. Add a middleware BEFORE the routes:
- 
-```typescript
-    import {TypeSerializerMiddleware} from 'typeserializer';
-    
-    // ... 
-    
-    app.use(TypeSerializerMiddleware());
-    
-    // OR with a version number to use with @Before & @After
-    app.use(TypeSerializerMiddleware({ version: '1.0.2' }));
-```
-
- 2. Example of usage:
- 
-`user.entity.ts:`
-
-```typescript
- import {TypeSerializer, Expose, ExclusionStrategies, Groups, serialize} from 'typeserializer';
-
- // Defining an object
- 
- @TypeSerializer(ExclusionStrategies.All)
- class User {
- 
-   @Expose()
-   @Groups(['user-account'])
-   username = 'Dan';
- 
-   @Expose()
-   @Groups(['user-details'])
-   age = 28;
- 
-   password = 'foo';
- }
-```
-
-
-`user.ctrl.ts:`
-
-**IMPORTANT**: you should use `tsJson` instead of `json` in order to use TypeSerializer.
- 
-```typescript
-import {TypeSerializerResponse} from 'typeserializer';
-
-class UserCtrl {
- 
-   @TypeSerializerResponse(['user-account'])
-   static getAccountDetails(req, res) {
-     const user = new User();
-     return res.status(418).tsJson(user); // prints: '{ username: 'Dan' }'
-   }
- }
- 
- const express = require('express');
- const router = express.Router();
- 
- router.get('/user/account', UserCtrl.getAccountDetails);
-```

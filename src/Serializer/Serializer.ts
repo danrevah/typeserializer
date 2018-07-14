@@ -33,7 +33,7 @@ function transform(obj: any, groups?: string[], version?: string) {
   return Object.getOwnPropertyNames(obj).reduce((json: any, key: string) => {
     const name = nameMap[key] || key;
 
-    if (shouldAdd(excludeMap, exposeMap, beforeMap, afterMap, groupsMap, strategy, key, groups, version)) {
+    if (shouldAdd(obj, excludeMap, exposeMap, beforeMap, afterMap, groupsMap, strategy, key, groups, version)) {
       if (Array.isArray(obj[key])) {
         json[name] = transformArray(obj[key], groups, version);
       } else if (isObject(obj[key])) {
@@ -48,16 +48,17 @@ function transform(obj: any, groups?: string[], version?: string) {
 }
 
 function shouldAdd(
-  excludeMap: any, exposeMap: any, beforeMap: any, afterMap: any, groupsMap: any,
+  obj: any, excludeMap: any, exposeMap: any, beforeMap: any, afterMap: any, groupsMap: any,
   strategy: ExclusionPolicy, key: string, groups?: string[], version?: string
 ) {
   const propGroups = groupsMap && groupsMap[key] ? groupsMap[key] : [];
 
-  if (strategy === ExclusionPolicy.ALL && (!exposeMap.hasOwnProperty(key) || !exposeMap[key].call(null))) {
+  if (strategy === ExclusionPolicy.ALL &&
+    (!exposeMap.hasOwnProperty(key) || !exposeMap[key].call(null, obj, key))) {
     return false;
   }
 
-  if (excludeMap.hasOwnProperty(key) && excludeMap[key].call(null)) {
+  if (excludeMap.hasOwnProperty(key) && excludeMap[key].call(null, obj, key)) {
     return false;
   }
 
