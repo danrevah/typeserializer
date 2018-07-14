@@ -1,7 +1,7 @@
 {
   "name": "typeserializer",
   "version": "0.1.4",
-  "description": "",
+  "description": "TypeSerializer, designed to make prettier code while using exclusion strategies on objects.",
   "main": "dist/index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha -r ts-node/register src/*.spec.ts src/**/*.spec.ts",
@@ -18,7 +18,11 @@
     "url": "git+https://github.com/danrevah/typeserializer.git"
   },
   "keywords": [
-    "typescript"
+    "typescript",
+    "serializer",
+    "serialize",
+    "decorator",
+    "decorators"
   ],
   "author": "Dan Revah",
   "license": "MIT",
