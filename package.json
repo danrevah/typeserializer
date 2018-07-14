@@ -1,13 +1,17 @@
 {
   "name": "typeserializer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha -r ts-node/register src/*.spec.ts src/**/*.spec.ts",
     "cover": "NODE_ENV=test nyc npm t && nyc report --reporter=text-lcov",
     "build:lib": "rm -rf dist && ntsc",
-    "deploy": "npm run build:lib && cp package.json dist/package.json && npm publish --access=public dist"
+    "release": "standard-version",
+    "deploy": "npm run build:lib && cp package.json dist/package.json && npm publish --access=public dist",
+    "precommit": "lint-staged",
+    "prettier:write": "prettier --write './src/**/*.ts'",
+    "prettier:check": "prettier -l './src/**/*.ts'"
   },
   "repository": {
     "type": "git",
@@ -28,9 +32,13 @@
     "@types/node": "^8.0.53",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
     "mocha": "^4.0.1",
     "ntypescript": "1.201706190042.1",
     "nyc": "^11.3.0",
+    "prettier": "^1.13.7",
+    "standard-version": "^4.4.0",
     "ts-node": "^3.3.0",
     "typescript": "^2.6.1",
     "wrappy": "^1.0.2"
