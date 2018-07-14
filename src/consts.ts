@@ -1,8 +1,18 @@
 import 'reflect-metadata';
 
-export const ExcludeSymbol = Symbol('ExcludeSymbol');
-export const ExposeSymbol = Symbol('ExposeSymbol');
-export const GroupsSymbol = Symbol('GroupsSymbol');
-export const BeforeSymbol = Symbol('BeforeSymbol');
-export const AfterSymbol = Symbol('AfterSymbol');
-export const NameSymbol = Symbol('NameSymbol');
+// Property Decorators
+export const ExcludeSymbol = Symbol('Exclude');
+export const ExposeSymbol = Symbol('Expose');
+export const GroupsSymbol = Symbol('Groups');
+export const BeforeSymbol = Symbol('Before');
+export const AfterSymbol = Symbol('After');
+export const NameSymbol = Symbol('Name');
+
+// Class Decorators
+export const StrategySymbol = Symbol('Strategy');
+
+// Enums
+export enum ExclusionPolicy  {
+  NONE,
+  ALL
+}

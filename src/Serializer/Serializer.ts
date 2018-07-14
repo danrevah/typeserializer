@@ -1,10 +1,12 @@
 import {AfterSymbol, BeforeSymbol, ExcludeSymbol, ExposeSymbol, GroupsSymbol, NameSymbol} from '../consts';
-import {versionCompare} from '../helpers';
+import {isObject, versionCompare} from '../helpers';
 
 // @TODO: 1. Set an `Exclusion Strategy` decorator, and in `serialize` function (both..)
 // @TODO: 2. Set a dynamic exclusion / inclusion in the `@Exclude & @Expose` decorators.
 // @TODO: 3. Type decorator
 // @TODO: 4. Deserialize
+// @TODO: 5. Array serialize make sure it also supports deserialize them properly! exclude and everything..
+// @TODO: 5. Array deserialize make sure it also supports deserialize them properly! exclude and everything..
 
 export function serialize(obj: any, groups?: string[], version?: string) {
   return JSON.stringify(transform(obj, groups, version));
@@ -23,7 +25,7 @@ function transform(obj: any, groups?: string[], version?: string) {
     const name = nameMap[key] || key;
 
     if (shouldAdd(excludeMap, exposeMap, beforeMap, afterMap, groupsMap, key, groups, version)) {
-      if (typeof obj[key] === 'object') {
+      if (isObject(obj[key])) {
         json[name] = transform(obj[key], groups);
       } else {
         json[name] = obj[key];
