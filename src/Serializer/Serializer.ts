@@ -4,10 +4,6 @@ import {
 } from '../consts';
 import {isObject, versionCompare} from '../helpers';
 
-// @TODO: 1. Deserialize
-// @TODO: 2. Array serialize make sure it also supports deserialize them properly! exclude and everything..
-// @TODO: 3 . Array deserialize make sure it also supports deserialize them properly! exclude and everything..
-
 export function serialize(obj: any, groups?: string[], version?: string) {
   if (Array.isArray(obj)) {
     return JSON.stringify(transformArray(obj, groups, version));
