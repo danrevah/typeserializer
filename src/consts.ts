@@ -7,6 +7,7 @@ export const GroupsSymbol = Symbol('Groups');
 export const BeforeSymbol = Symbol('Before');
 export const AfterSymbol = Symbol('After');
 export const NameSymbol = Symbol('Name');
+export const TypeSymbol = Symbol('Type');
 
 // Class Decorators
 export const StrategySymbol = Symbol('Strategy');
