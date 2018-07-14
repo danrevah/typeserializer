@@ -1,4 +1,10 @@
 
+// Methods
+export {serialize} from './Serializer/Serializer';
+
+// Enums
+export {ExclusionPolicy} from './consts';
+
 // Property Decorators
 export {Exclude} from './PropertiesDecorators/Exclude';
 export {Expose} from './PropertiesDecorators/Expose';
@@ -10,6 +16,3 @@ export {Type} from './PropertiesDecorators/Type';
 
 // Class Decorators
 export {Strategy} from './ClassDecorators/Strategy';
-
-// Enums
-export {ExclusionPolicy} from './consts';
