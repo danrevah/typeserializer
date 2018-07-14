@@ -69,7 +69,7 @@ Changing name of a selected property is supported by using the `@Name` decorator
 
 #### Exclude All
  
- Using `all` as the exclusion strategy will exclude all properties except for those marked as `@Exposed()`.
+ Using `all` as the exclusion strategy will exclude all properties except for those marked as `@Expose()`.
  
 ```typescript
  import {serialize, Expose, Strategy, ExclusionPolicy} from 'typeserializer';
