@@ -8,6 +8,7 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
 
  - [Installation](#installation)
  - [Strategies](#strategies)
+    - [Name](#name)
     - [Manual Exclude](#manual-exclude)
     - [Exclude All](#exclude-all)
     - [Groups](#groups)
@@ -24,6 +25,26 @@ Install using npm:
 ```
 
 ### Strategies
+
+#### Name
+
+Changing name of a selected property is supported by using the `@Name` decorator.
+
+```typescript
+ import {serialize, Name} from 'typeserializer';
+
+ class SomeObject {
+ 
+   foo = 'foo';
+   
+   @Name('two')
+   bar = 'bar';
+ }
+ 
+ const obj = new SomeObject();
+ console.log(serialize(obj)); // prints: '{ two: 'bar' }'
+````
+
 
 #### Manual Exclude
  
