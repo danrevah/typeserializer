@@ -115,6 +115,17 @@ class DynamicNoneFoo {
   prop3: string = 'prop3';
 }
 
+class TwoLevelsArray {
+
+  @Name('barClass')
+  @Groups(['special'])
+  bar: Bar[];
+
+  constructor() {
+    this.bar = [new Bar(), new Bar()];
+  }
+}
+
 describe('Expose', () => {
 
   it('should expose properties while serializing', () => {
@@ -182,5 +193,12 @@ describe('Expose', () => {
   it('should exclude properties while serializing with functions', () => {
     const foo = new DynamicNoneFoo();
     expect(serialize(foo)).to.equal('{"prop2":"prop2","prop3":"prop3"}');
+  });
+
+  it('should serialize arrays nested types', () => {
+    const foo = new TwoLevelsArray();
+    expect(serialize(foo)).to.equal(
+      '{"barClass":[{"bar":"prop","prop2":"prop2","prop3":"prop3"},{"bar":"prop","prop2":"prop2","prop3":"prop3"}]}'
+    );
   });
 });

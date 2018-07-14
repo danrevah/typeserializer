@@ -4,16 +4,27 @@ import {
 } from '../consts';
 import {isObject, versionCompare} from '../helpers';
 
-// @TODO: 1. Type decorator
-// @TODO: 2. Deserialize
-// @TODO: 3. Array serialize make sure it also supports deserialize them properly! exclude and everything..
-// @TODO: 4. Array deserialize make sure it also supports deserialize them properly! exclude and everything..
+// @TODO: 1. Deserialize
+// @TODO: 2. Array serialize make sure it also supports deserialize them properly! exclude and everything..
+// @TODO: 3 . Array deserialize make sure it also supports deserialize them properly! exclude and everything..
 
 export function serialize(obj: any, groups?: string[], version?: string) {
+  if (Array.isArray(obj)) {
+    return JSON.stringify(transformArray(obj, groups, version));
+  }
+
   return JSON.stringify(transform(obj, groups, version));
 }
 
 // -- Private --
+function transformArray(arr: any[], groups?: string[], version?: string): any {
+  return arr.map((elm: any) =>
+    (Array.isArray(elm))
+      ? transformArray(elm, groups, version)
+      : transform(elm, groups, version)
+  );
+}
+
 function transform(obj: any, groups?: string[], version?: string) {
   const excludeMap = Reflect.getMetadata(ExcludeSymbol, obj) || {};
   const exposeMap = Reflect.getMetadata(ExposeSymbol, obj) || {};
@@ -27,8 +38,10 @@ function transform(obj: any, groups?: string[], version?: string) {
     const name = nameMap[key] || key;
 
     if (shouldAdd(excludeMap, exposeMap, beforeMap, afterMap, groupsMap, strategy, key, groups, version)) {
-      if (isObject(obj[key])) {
-        json[name] = transform(obj[key], groups);
+      if (Array.isArray(obj[key])) {
+        json[name] = transformArray(obj[key], groups, version);
+      } else if (isObject(obj[key])) {
+        json[name] = transform(obj[key], groups, version);
       } else {
         json[name] = obj[key];
       }
