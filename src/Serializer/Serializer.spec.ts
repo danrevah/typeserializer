@@ -1,5 +1,4 @@
 
-import 'mocha';
 import {expect} from 'chai';
 import {Expose} from '../PropertiesDecorators/Expose';
 import {serialize} from './Serializer';
@@ -9,6 +8,7 @@ import {After} from '../PropertiesDecorators/After';
 import {Name} from '../PropertiesDecorators/Name';
 import {Strategy} from '../ClassDecorators/Strategy';
 import {ExclusionPolicy} from '../consts';
+import {Exclude} from '../';
 
 class Foo {
 
@@ -92,6 +92,29 @@ class User {
   password: string = '123456';
 }
 
+@Strategy(ExclusionPolicy.ALL)
+class DynamicFoo {
+
+  @Expose(() => true)
+  prop: string = 'prop';
+
+  @Expose(() => false)
+  prop2: string = 'prop2';
+
+  prop3: string = 'prop3';
+}
+
+class DynamicNoneFoo {
+
+  @Exclude(() => true)
+  prop: string = 'prop';
+
+  @Exclude(() => false)
+  prop2: string = 'prop2';
+
+  prop3: string = 'prop3';
+}
+
 describe('Expose', () => {
 
   it('should expose properties while serializing', () => {
@@ -149,5 +172,15 @@ describe('Expose', () => {
   it('should expose only exposed properties while exclusion policy is set to ALL and show current group', () => {
     const user = new User();
     expect(serialize(user, ['personal'])).to.equal('{"firstName":"Dan","lastName":"Revah"}');
+  });
+
+  it('should expose properties while serializing with functions', () => {
+    const foo = new DynamicFoo();
+    expect(serialize(foo)).to.equal('{"prop":"prop"}');
+  });
+
+  it('should exclude properties while serializing with functions', () => {
+    const foo = new DynamicNoneFoo();
+    expect(serialize(foo)).to.equal('{"prop2":"prop2","prop3":"prop3"}');
   });
 });

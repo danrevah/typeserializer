@@ -1,6 +1,6 @@
 import {
-  AfterSymbol, BeforeSymbol, ExcludeSymbol, ExclusionPolicy, ExposeSymbol, GroupsSymbol, NameSymbol,
-  StrategySymbol
+  AfterSymbol, BeforeSymbol, ExcludeSymbol, ExclusionPolicy,
+  ExposeSymbol, GroupsSymbol, NameSymbol, StrategySymbol
 } from '../consts';
 import {isObject, versionCompare} from '../helpers';
 
@@ -45,11 +45,11 @@ function shouldAdd(
 ) {
   const propGroups = groupsMap && groupsMap[key] ? groupsMap[key] : [];
 
-  if (strategy === ExclusionPolicy.ALL && !exposeMap.hasOwnProperty(key)) {
+  if (strategy === ExclusionPolicy.ALL && (!exposeMap.hasOwnProperty(key) || !exposeMap[key].call(null))) {
     return false;
   }
 
-  if (excludeMap.hasOwnProperty(key)) {
+  if (excludeMap.hasOwnProperty(key) && excludeMap[key].call(null)) {
     return false;
   }
 

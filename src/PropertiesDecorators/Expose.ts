@@ -1,6 +1,6 @@
 import {ExposeSymbol} from '../consts';
 import {createDecorator} from './Decorator';
 
-export function Expose() {
-  return createDecorator('Expose', ExposeSymbol, true);
+export function Expose(fn?: Function) {
+  return createDecorator('Expose', ExposeSymbol, fn || (() => true));
 }

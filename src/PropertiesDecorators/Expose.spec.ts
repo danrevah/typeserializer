@@ -35,10 +35,8 @@ describe('Expose', () => {
     const foo = new Foo();
     const metadata = Reflect.getMetadata(ExposeSymbol, foo);
 
-    expect(metadata).to.deep.equal({
-      prop: true,
-      prop3: true
-    });
+    expect(metadata.prop()).to.equal(true);
+    expect(metadata.prop3()).to.equal(true);
   });
 
   it('should not add metadata twice, it should throws an exception instead', () => {
