@@ -1,11 +1,10 @@
 import {AfterSymbol, BeforeSymbol, ExcludeSymbol, ExposeSymbol, GroupsSymbol, NameSymbol} from '../consts';
 import {versionCompare} from '../helpers';
 
-// @TODO: 2. Make tests like previous in `master` branch in all of the decorators to check if symbol exists
-// @TODO: 3. Set an `Exclusion Strategy` decorator, and in `serialize` function (both..)
-// @TODO: 4. Set a dynamic exclusion / inclusion in the `@Exclude & @Expose` decorators.
-// @TODO: 5. Express Integration
-// @TODO: 6. Express 6+ Integration
+// @TODO: 1. Set an `Exclusion Strategy` decorator, and in `serialize` function (both..)
+// @TODO: 2. Set a dynamic exclusion / inclusion in the `@Exclude & @Expose` decorators.
+// @TODO: 3. Type decorator
+// @TODO: 4. Deserialize
 
 export function serialize(obj: any, groups?: string[], version?: string) {
   return JSON.stringify(transform(obj, groups, version));
