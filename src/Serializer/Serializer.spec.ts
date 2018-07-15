@@ -8,7 +8,7 @@ import { Name } from '../PropertiesDecorators/Name';
 import { Strategy } from '../ClassDecorators/Strategy';
 import { ExclusionPolicy } from '../consts';
 import { Exclude } from '../';
-import {Serializer} from '../PropertiesDecorators/Serializer';
+import { Serializer } from '../PropertiesDecorators/Serializer';
 
 class Foo {
   @Before('1.2.0')
@@ -126,7 +126,7 @@ class CircularReferenceArrClass {
 }
 
 class SerializerTest {
-  @Serializer((value: string): any => 'foo-'+value)
+  @Serializer((value: string): any => 'foo-' + value)
   name: string;
 
   constructor() {
@@ -243,5 +243,5 @@ describe('Serializer', () => {
     const test = new SerializerTest();
 
     expect(serialize(test)).to.equal('{"name":"foo-test"}');
-  })
+  });
 });

@@ -4,18 +4,20 @@ import { Serializer } from './Serializer';
 import { SerializerSymbol } from '../consts';
 
 class Foo {
-  @Serializer((value: any) => 'propName'+value) prop = 'prop';
+  @Serializer((value: any) => 'propName' + value)
+  prop = 'prop';
 
   prop2 = 'prop2';
 
-  @Serializer((value: any) => 'propName'+value) prop3 = 'prop3';
+  @Serializer((value: any) => 'propName' + value)
+  prop3 = 'prop3';
 }
 
 function declareClass() {
   /* istanbul ignore next */
   class tmp {
-    @Serializer((value: any) => 'propName'+value)
-    @Serializer((value: any) => 'propName'+value)
+    @Serializer((value: any) => 'propName' + value)
+    @Serializer((value: any) => 'propName' + value)
     prop3 = 'prop3';
   }
 

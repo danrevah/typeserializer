@@ -1,4 +1,4 @@
-import {DeserializerSymbol, TypeSymbol} from '../consts';
+import { DeserializerSymbol, TypeSymbol } from '../consts';
 
 export function deserialize<T>(json: string, classType: T): any {
   return transform(JSON.parse(json), classType);

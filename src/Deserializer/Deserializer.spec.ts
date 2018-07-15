@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { deserialize } from './Deserializer';
-import {Deserializer, Type} from '../';
+import { Deserializer, Type } from '../';
 
 const fixtureSimple =
   '{"firstName":"Dan","lastName":"Revah","age":28,"isHere":true,"birthDate":"2018-07-15T05:35:03.000Z"}';
@@ -32,13 +32,11 @@ export class CauseException {
 }
 
 export class Prop {
-  constructor(
-    public name: string
-  ) {}
+  constructor(public name: string) {}
 }
 
 export class SimpleDeserializer {
-  @Deserializer((value: string) => new Prop('my-prop-'+value))
+  @Deserializer((value: string) => new Prop('my-prop-' + value))
   prop: Prop;
 }
 

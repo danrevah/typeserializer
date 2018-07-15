@@ -4,18 +4,20 @@ import { Deserializer } from './Deserializer';
 import { DeserializerSymbol } from '../consts';
 
 class Foo {
-  @Deserializer((value: any) => 'propName'+value) prop = 'prop';
+  @Deserializer((value: any) => 'propName' + value)
+  prop = 'prop';
 
   prop2 = 'prop2';
 
-  @Deserializer((value: any) => 'propName'+value) prop3 = 'prop3';
+  @Deserializer((value: any) => 'propName' + value)
+  prop3 = 'prop3';
 }
 
 function declareClass() {
   /* istanbul ignore next */
   class tmp {
-    @Deserializer((value: any) => 'propName'+value)
-    @Deserializer((value: any) => 'propName'+value)
+    @Deserializer((value: any) => 'propName' + value)
+    @Deserializer((value: any) => 'propName' + value)
     prop3 = 'prop3';
   }
 

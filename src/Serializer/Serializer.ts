@@ -6,7 +6,8 @@ import {
   ExclusionPolicy,
   ExposeSymbol,
   GroupsSymbol,
-  NameSymbol, SerializerSymbol,
+  NameSymbol,
+  SerializerSymbol,
   StrategySymbol,
 } from '../consts';
 import { isObject, versionCompare } from '../helpers';
