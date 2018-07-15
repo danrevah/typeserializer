@@ -224,6 +224,8 @@ describe('Serializer', () => {
     const foo = new CircularReferenceSingleClass();
     foo.circular = foo;
     arr.circular = [foo, foo, foo];
-    expect(serialize(arr)).to.equal('{"name":"circular","circular":[{"name":"circular"},{"name":"circular"},{"name":"circular"}]}');
+    expect(serialize(arr)).to.equal(
+      '{"name":"circular","circular":[{"name":"circular"},{"name":"circular"},{"name":"circular"}]}'
+    );
   });
 });

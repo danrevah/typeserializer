@@ -1,5 +1,3 @@
-
-
 export enum Detector {
-  CIRCULAR_REFERENCE = 'CircularReference'
+  CIRCULAR_REFERENCE = 'CircularReference',
 }
