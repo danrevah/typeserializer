@@ -22,6 +22,7 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
     - [Deep Objects](#deep-objects)
     - [Version](#version)
     - [Dynamic Exclusion](#dynamic-exclusion)
+    - [DeSerializer](#deserializer)
 
 ## Installation
 
@@ -224,4 +225,45 @@ import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
  
  const foo = new Foo();
  console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
+``` 
+
+#### DeSerializer
+
+TypeSerializer also contains a `deserialize()` method, to deserialize JSON to objects.
+
+This will require adding a `@Type` annotation to the 'complex' type properties including `Date`.  
+
+
+```typescript
+import {deserialize, Type} from 'typeserializer';
+
+const fixtureSimple =
+  '{"firstName":"Dan","lastName":"Revah","age":28,"isHere":true,"birthDate":"2018-07-15T05:35:03.000Z"}';
+const fixtureChild = `{"child":${fixtureSimple}}`;
+const fixtureChildren = `{"children":[${fixtureSimple}, ${fixtureSimple}]}`;
+
+class Simple {
+  firstName: string;
+  lastName: string;
+  age: number;
+  isHere: boolean;
+
+  @Type(Date)
+  birthDate: Date;
+}
+
+class SimpleChild {
+  @Type(Simple) 
+  child: Simple;
+}
+
+class SimpleChildArr {
+  @Type([Simple]) 
+  children: Simple[];
+}
+
+ console.log(deserialize(fixtureSimple, Simple)); // Simple { firstName: "Dan", ... }
+ console.log(deserialize(fixtureChild, SimpleChild)); // SimpleChild { child: Simple { firstName: "Dan", ... } }
+ console.log(deserialize(fixtureChildren, SimpleChildArr)); // SimpleChildArr { children: [Simple { ... }, Simple { ... }] }
+
 ``` 
