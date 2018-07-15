@@ -17,12 +17,16 @@ export function versionCompare(v1: any, v2: any, options: any = {}) {
     return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
   }
 
+  /* istanbul ignore next */
   if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
     return NaN;
   }
 
+  /* istanbul ignore next */
   if (zeroExtend) {
+    /* istanbul ignore next */
     while (v1parts.length < v2parts.length) v1parts.push("0");
+    /* istanbul ignore next */
     while (v2parts.length < v1parts.length) v2parts.push("0");
   }
 
@@ -31,6 +35,7 @@ export function versionCompare(v1: any, v2: any, options: any = {}) {
     v2parts = v2parts.map(Number);
   }
 
+  /* istanbul ignore next */
   for (let i = 0; i < v1parts.length; ++i) {
     if (v2parts.length == i) {
       return 1;

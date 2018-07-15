@@ -11,6 +11,7 @@ function createClass() {
   @Strategy(ExclusionPolicy.ALL)
   class tmp {}
 
+  /* istanbul ignore next */
   return tmp;
 }
 

@@ -27,14 +27,6 @@ class Bar {
   prop2: string = 'prop2';
 
   prop3: string = 'prop3';
-
-  fn() {
-    this.prop2 = 'prop2-2';
-  }
-
-  fn2() {
-    this.prop2 = 'prop2-2';
-  }
 }
 
 class TwoLevels {
@@ -118,6 +110,11 @@ describe('Serializer', () => {
   it('should expose properties while serializing', () => {
     const foo = new Foo();
     expect(serialize(foo)).to.equal('{"foo":"prop","prop2":"prop2","prop3":"prop3"}');
+  });
+
+  it('should expose properties while serializing array', () => {
+    const fooArr = [new Foo(), new Foo()];
+    expect(serialize(fooArr)).to.equal('[{"foo":"prop","prop2":"prop2","prop3":"prop3"},{"foo":"prop","prop2":"prop2","prop3":"prop3"}]');
   });
 
   it('should expose properties while serializing with version', () => {

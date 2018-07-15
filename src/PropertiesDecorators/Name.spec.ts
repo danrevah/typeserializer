@@ -12,15 +12,14 @@ class Foo {
 }
 
 function declareClass() {
+  /* istanbul ignore next */
   class tmp {
-    prop = "prop";
-    prop2 = "prop2";
-
     @Name("")
     @Name("")
     prop3 = "prop3";
   }
 
+  /* istanbul ignore next */
   return tmp;
 }
 
