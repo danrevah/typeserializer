@@ -205,25 +205,22 @@ You can also serialize a property by version number with @Before & @After.
 
 It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
 
-For example you could serialize to a Moment instance using the `@Serializer()` annotation.
+For example you could deserialize *to* a Moment instance using the `@Deserializer()` annotation.
 
 ```typescript
 import {Serializer, deserialize} from 'typeserializer';
 
 class SerializerTest {
-  @Serializer((m: Moment): any => m.format('LLLL'))
+  @Serializer((m: string): any => Moment(m))
   date: Moment;
 }
- 
- const foo = new Foo();
- console.log(deserialize(foo)); // prints: '{ prop: 'prop: }'
 ``` 
 
 #### Custom Serializer
 
 It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
 
-For example you could serialize to a Moment instance using the `@Serializer()` annotation.
+For example you could serialize *from* a Moment instance using the `@Serializer()` annotation.
 
 ```typescript
 import {Serializer, serialize} from 'typeserializer';
@@ -233,8 +230,6 @@ class SerializerTest {
   date: Moment;
 }
  
- const foo = new Foo();
- console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
 ``` 
 
 #### Dynamic Exclusion
