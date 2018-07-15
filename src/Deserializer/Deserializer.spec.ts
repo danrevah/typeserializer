@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { deserialize } from './Deserializer';
-import {Type} from '../';
+import { Type } from '../';
 
 const fixtureDate = new Date(2018, 6, 15, 8, 35, 3);
 const fixtureSimple =
@@ -14,13 +14,11 @@ export class Simple {
   age: number;
   isHere: boolean;
 
-  @Type(Date)
-  birthDate: Date;
+  @Type(Date) birthDate: Date;
 }
 
 export class SimpleChild {
-  @Type(Simple)
-  child: Simple;
+  @Type(Simple) child: Simple;
 }
 
 export class SimpleChildArr {
@@ -74,7 +72,8 @@ describe('Deserializer', () => {
   });
 
   it('should throw an error if have more than once value in @Type array annotation', () => {
-    expect(() => deserialize(fixtureChildren, CauseException))
-      .to.throw('`@Type` can only be defined with a single value, or an array with a single value. for ex: `@Type(User)` or `@Type([User])`');
+    expect(() => deserialize(fixtureChildren, CauseException)).to.throw(
+      '`@Type` can only be defined with a single value, or an array with a single value. for ex: `@Type(User)` or `@Type([User])`'
+    );
   });
 });

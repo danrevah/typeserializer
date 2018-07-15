@@ -1,4 +1,4 @@
-import {TypeSymbol} from '../consts';
+import { TypeSymbol } from '../consts';
 
 export function deserialize<T>(json: string, classType: T): any {
   return transform(JSON.parse(json), classType);
@@ -6,13 +6,11 @@ export function deserialize<T>(json: string, classType: T): any {
 
 // -- Private --
 function transformArray(arr: any[], classType: any): any[] {
-  return arr.map(
-    (elm: any) => Array.isArray(elm) ? transformArray(elm, classType) : transform(elm, classType)
-  )
+  return arr.map((elm: any) => (Array.isArray(elm) ? transformArray(elm, classType) : transform(elm, classType)));
 }
 
 function transform(obj: any, classType: any) {
-  const instance = new (classType)();
+  const instance = new classType();
   const typeMap = Reflect.getMetadata(TypeSymbol, instance) || {};
 
   Object.keys(obj).forEach((key: string) => {
@@ -26,7 +24,9 @@ function transform(obj: any, classType: any) {
 
     if (Array.isArray(type) && Array.isArray(obj[key])) {
       if (type.length !== 1) {
-        throw new Error('`@Type` can only be defined with a single value, or an array with a single value. for ex: `@Type(User)` or `@Type([User])`');
+        throw new Error(
+          '`@Type` can only be defined with a single value, or an array with a single value. for ex: `@Type(User)` or `@Type([User])`'
+        );
       }
 
       instance[key] = transformArray(obj[key], type[0]);
