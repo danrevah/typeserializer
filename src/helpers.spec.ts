@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'reflect-metadata';
 import 'mocha';
-import {isObject, isUndefined, versionCompare} from './helpers';
+import { isObject, isUndefined, versionCompare } from './helpers';
 
 describe('Helpers', () => {
   it('should check isUndefined', () => {
