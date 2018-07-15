@@ -201,37 +201,6 @@ You can also serialize a property by version number with @Before & @After.
  console.log(serialize(user, [], '1.3.0')); // prints: '{ fullName: 'Dan Revah' }'
 ```
 
-#### Custom Deserializer
-
-It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
-
-For example you could deserialize *to* a Moment instance using the `@Deserializer()` annotation.
-
-```typescript
-import {Deserializer, deserialize} from 'typeserializer';
-
-class DeserializerTest {
-  @Deserializer((m: string): any => Moment(m))
-  date: Moment;
-}
-``` 
-
-#### Custom Serializer
-
-It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
-
-For example you could serialize *from* a Moment instance using the `@Serializer()` annotation.
-
-```typescript
-import {Serializer, serialize} from 'typeserializer';
-
-class SerializerTest {
-  @Serializer((m: Moment): any => m.format('LLLL'))
-  date: Moment;
-}
- 
-``` 
-
 #### Dynamic Exclusion
 
 If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
@@ -299,4 +268,35 @@ class SimpleChildArr {
  console.log(deserialize(fixtureChild, SimpleChild)); // SimpleChild { child: Simple { firstName: "Dan", ... } }
  console.log(deserialize(fixtureChildren, SimpleChildArr)); // SimpleChildArr { children: [Simple { ... }, Simple { ... }] }
 
+``` 
+
+#### Custom Deserializer
+
+It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
+
+For example you could deserialize *to* a Moment instance using the `@Deserializer()` annotation.
+
+```typescript
+import {Deserializer, deserialize} from 'typeserializer';
+
+class DeserializerTest {
+  @Deserializer((m: string): any => Moment(m))
+  date: Moment;
+}
+``` 
+
+#### Custom Serializer
+
+It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
+
+For example you could serialize *from* a Moment instance using the `@Serializer()` annotation.
+
+```typescript
+import {Serializer, serialize} from 'typeserializer';
+
+class SerializerTest {
+  @Serializer((m: Moment): any => m.format('LLLL'))
+  date: Moment;
+}
+ 
 ``` 
