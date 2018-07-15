@@ -12,6 +12,8 @@ export { Before } from "./PropertiesDecorators/Before";
 export { Groups } from "./PropertiesDecorators/Groups";
 export { Name } from "./PropertiesDecorators/Name";
 export { Type } from "./PropertiesDecorators/Type";
+export { Serializer } from "./PropertiesDecorators/Serializer";
+export { Deserializer } from "./PropertiesDecorators/Deserializer";
 
 // Class Decorators
 export { Strategy } from "./ClassDecorators/Strategy";

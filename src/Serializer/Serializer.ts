@@ -6,7 +6,7 @@ import {
   ExclusionPolicy,
   ExposeSymbol,
   GroupsSymbol,
-  NameSymbol,
+  NameSymbol, SerializerSymbol,
   StrategySymbol,
 } from '../consts';
 import { isObject, versionCompare } from '../helpers';
@@ -33,6 +33,7 @@ function transform(obj: any, groups?: string[], version?: string, stack?: Set<an
   const beforeMap = Reflect.getMetadata(BeforeSymbol, obj) || {};
   const afterMap = Reflect.getMetadata(AfterSymbol, obj) || {};
   const nameMap = Reflect.getMetadata(NameSymbol, obj) || {};
+  const serializeMap = Reflect.getMetadata(SerializerSymbol, obj) || {};
   const strategy = Reflect.getMetadata(StrategySymbol, obj.constructor);
 
   const mySet = new Set(stack || []);
@@ -47,7 +48,9 @@ function transform(obj: any, groups?: string[], version?: string, stack?: Set<an
     const name = nameMap[key] || key;
 
     if (shouldAdd(obj, excludeMap, exposeMap, beforeMap, afterMap, groupsMap, strategy, key, groups, version)) {
-      if (Array.isArray(obj[key])) {
+      if (typeof serializeMap[key] === 'function') {
+        json[name] = serializeMap[key].call(null, obj[key], obj);
+      } else if (Array.isArray(obj[key])) {
         json[name] = transformArray(obj[key], groups, version, mySet);
       } else if (isObject(obj[key])) {
         const transformed = transform(obj[key], groups, version, mySet);

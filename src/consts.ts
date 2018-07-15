@@ -8,6 +8,8 @@ export const BeforeSymbol = Symbol('Before');
 export const AfterSymbol = Symbol('After');
 export const NameSymbol = Symbol('Name');
 export const TypeSymbol = Symbol('Type');
+export const SerializerSymbol = Symbol('Serializer');
+export const DeserializerSymbol = Symbol('Deserializer');
 
 // Class Decorators
 export const StrategySymbol = Symbol('Strategy');

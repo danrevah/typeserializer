@@ -21,6 +21,7 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
     - [Groups](#groups)
     - [Deep Objects](#deep-objects)
     - [Version](#version)
+    - [Custom Serializer](#custom-serializer)
     - [Dynamic Exclusion](#dynamic-exclusion)
     - [DeSerializer](#deserializer)
 
@@ -198,6 +199,42 @@ You can also serialize a property by version number with @Before & @After.
  console.log(serialize(user, [], '1.2.0')); // prints: '{ fullName: 'Dan Revah' }'
  console.log(serialize(user, [], '1.3.0')); // prints: '{ fullName: 'Dan Revah' }'
 ```
+
+#### Custom DeSerializer
+
+It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
+
+For example you could serialize to a Moment instance using the `@Serializer()` annotation.
+
+```typescript
+import {Serializer, serialize} from 'typeserializer';
+
+class SerializerTest {
+  @Serializer((m: Moment): any => m.format('LLLL'))
+  date: Moment;
+}
+ 
+ const foo = new Foo();
+ console.log(deserialize(foo)); // prints: '{ prop: 'prop: }'
+``` 
+
+#### Custom Serializer
+
+It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
+
+For example you could serialize to a Moment instance using the `@Serializer()` annotation.
+
+```typescript
+import {Serializer, serialize} from 'typeserializer';
+
+class SerializerTest {
+  @Serializer((m: Moment): any => m.format('LLLL'))
+  date: Moment;
+}
+ 
+ const foo = new Foo();
+ console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
+``` 
 
 #### Dynamic Exclusion
 

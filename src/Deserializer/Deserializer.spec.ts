@@ -1,11 +1,12 @@
 import { expect } from 'chai';
 import { deserialize } from './Deserializer';
-import { Type } from '../';
+import {Deserializer, Type} from '../';
 
 const fixtureSimple =
   '{"firstName":"Dan","lastName":"Revah","age":28,"isHere":true,"birthDate":"2018-07-15T05:35:03.000Z"}';
 const fixtureChild = `{"child":${fixtureSimple}}`;
 const fixtureChildren = `{"children":[${fixtureSimple}, ${fixtureSimple}]}`;
+const fixtureDeserialize = `{"prop":"name"}`;
 
 export class Simple {
   firstName: string;
@@ -28,6 +29,17 @@ export class SimpleChildArr {
 export class CauseException {
   @Type([Simple, Simple])
   children: Simple[];
+}
+
+export class Prop {
+  constructor(
+    public name: string
+  ) {}
+}
+
+export class SimpleDeserializer {
+  @Deserializer((value: string) => new Prop('my-prop-'+value))
+  prop: Prop;
 }
 
 describe('Deserializer', () => {
@@ -74,5 +86,10 @@ describe('Deserializer', () => {
     expect(() => deserialize(fixtureChildren, CauseException)).to.throw(
       '`@Type` can only be defined with a single value, or an array with a single value. for ex: `@Type(User)` or `@Type([User])`'
     );
+  });
+
+  it('should use the `@Deserialize` function on a property while deserialize', () => {
+    const simpleDes: SimpleDeserializer = deserialize(fixtureDeserialize, SimpleDeserializer);
+    expect(simpleDes.prop.name).to.equal('my-prop-name');
   });
 });
