@@ -52,7 +52,8 @@ function transform(obj: any, groups?: string[], version?: string, stack?: Set<an
       if (typeof serializeMap[key] === 'function') {
         json[name] = serializeMap[key].call(null, obj[key], obj);
       } else if (Array.isArray(obj[key])) {
-        json[name] = transformArray(obj[key], groups, version, mySet);
+        json[name] = transformArray(obj[key], groups, version, mySet)
+          .filter((elm: any) => elm !== Detector.CIRCULAR_REFERENCE);
       } else if (isObject(obj[key])) {
         const transformed = transform(obj[key], groups, version, mySet);
         if (transformed !== Detector.CIRCULAR_REFERENCE) {
