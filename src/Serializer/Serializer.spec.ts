@@ -106,6 +106,24 @@ class TwoLevelsArray {
   }
 }
 
+class CircularReferenceSingleClass {
+  name: string;
+  circular: CircularReferenceSingleClass;
+
+  constructor() {
+    this.name = 'circular';
+  }
+}
+
+class CircularReferenceArrClass {
+  name: string;
+  circular: CircularReferenceSingleClass[];
+
+  constructor() {
+    this.name = 'circular';
+  }
+}
+
 describe('Serializer', () => {
   it('should expose properties while serializing', () => {
     const foo = new Foo();
@@ -193,5 +211,19 @@ describe('Serializer', () => {
       '{"barClass":[{"bar":"prop","prop2":"prop2","prop3":"prop3"},{"bar":"prop","prop2":"prop2","prop3":"prop3"}]}'
     );
     expect(serialize(foo, ['special'])).to.equal('{"barClass":[{"bar":"prop"},{"bar":"prop"}]}');
+  });
+
+  it('should ignore circular references', () => {
+    const foo = new CircularReferenceSingleClass();
+    foo.circular = foo;
+    expect(serialize(foo)).to.equal('{"name":"circular"}');
+  });
+
+  it('should ignore circular references inside arrays', () => {
+    const arr = new CircularReferenceArrClass();
+    const foo = new CircularReferenceSingleClass();
+    foo.circular = foo;
+    arr.circular = [foo, foo, foo];
+    expect(serialize(arr)).to.equal('{"name":"circular","circular":[{"name":"circular"},{"name":"circular"},{"name":"circular"}]}');
   });
 });

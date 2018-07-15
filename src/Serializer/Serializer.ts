@@ -9,6 +9,7 @@ import {
   StrategySymbol,
 } from "../consts";
 import { isObject, versionCompare } from "../helpers";
+import {Detector} from './interfaces';
 
 export function serialize(obj: any, groups?: string[], version?: string) {
   if (Array.isArray(obj)) {
@@ -19,13 +20,17 @@ export function serialize(obj: any, groups?: string[], version?: string) {
 }
 
 // -- Private --
-function transformArray(arr: any[], groups?: string[], version?: string): any {
+function transformArray(arr: any[], groups?: string[], version?: string, stack?: Set<any>): any {
   return arr.map(
-    (elm: any) => (Array.isArray(elm) ? transformArray(elm, groups, version) : transform(elm, groups, version))
+    (elm: any) => {
+      return Array.isArray(elm)
+        ? transformArray(elm, groups, version, stack)
+        : transform(elm, groups, version, stack);
+    }
   );
 }
 
-function transform(obj: any, groups?: string[], version?: string) {
+function transform(obj: any, groups?: string[], version?: string, stack?: Set<any>) {
   const excludeMap = Reflect.getMetadata(ExcludeSymbol, obj) || {};
   const exposeMap = Reflect.getMetadata(ExposeSymbol, obj) || {};
   const groupsMap = Reflect.getMetadata(GroupsSymbol, obj) || {};
@@ -34,14 +39,26 @@ function transform(obj: any, groups?: string[], version?: string) {
   const nameMap = Reflect.getMetadata(NameSymbol, obj) || {};
   const strategy = Reflect.getMetadata(StrategySymbol, obj.constructor);
 
+  const mySet = new Set(stack || []);
+
+  if (mySet.has(obj)) {
+    return Detector.CIRCULAR_REFERENCE;
+  }
+
+  mySet.add(obj);
+
   return Object.getOwnPropertyNames(obj).reduce((json: any, key: string) => {
     const name = nameMap[key] || key;
 
     if (shouldAdd(obj, excludeMap, exposeMap, beforeMap, afterMap, groupsMap, strategy, key, groups, version)) {
       if (Array.isArray(obj[key])) {
-        json[name] = transformArray(obj[key], groups, version);
+        json[name] = transformArray(obj[key], groups, version, mySet)
+          // .filter((elm: any) => elm !== Detector.CIRCULAR_REFERENCE);
       } else if (isObject(obj[key])) {
-        json[name] = transform(obj[key], groups, version);
+        const transformed = transform(obj[key], groups, version, mySet);
+        if (transformed !== Detector.CIRCULAR_REFERENCE) {
+          json[name] = transformed;
+        }
       } else {
         json[name] = obj[key];
       }
