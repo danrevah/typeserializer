@@ -114,7 +114,9 @@ describe('Serializer', () => {
 
   it('should expose properties while serializing array', () => {
     const fooArr = [new Foo(), new Foo()];
-    expect(serialize(fooArr)).to.equal('[{"foo":"prop","prop2":"prop2","prop3":"prop3"},{"foo":"prop","prop2":"prop2","prop3":"prop3"}]');
+    expect(serialize(fooArr)).to.equal(
+      '[{"foo":"prop","prop2":"prop2","prop3":"prop3"},{"foo":"prop","prop2":"prop2","prop3":"prop3"}]'
+    );
   });
 
   it('should expose properties while serializing with version', () => {
