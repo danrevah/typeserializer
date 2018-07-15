@@ -17,3 +17,8 @@ export enum ExclusionPolicy {
   NONE,
   ALL,
 }
+
+// Consts
+export const Detector = {
+  CIRCULAR_REFERENCE: Symbol('CircularReference')
+};

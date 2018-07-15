@@ -1,6 +1,6 @@
 import {
   AfterSymbol,
-  BeforeSymbol,
+  BeforeSymbol, Detector,
   ExcludeSymbol,
   ExclusionPolicy,
   ExposeSymbol,
@@ -9,7 +9,6 @@ import {
   StrategySymbol,
 } from '../consts';
 import { isObject, versionCompare } from '../helpers';
-import { Detector } from './interfaces';
 
 export function serialize(obj: any, groups?: string[], version?: string) {
   if (Array.isArray(obj)) {
@@ -49,7 +48,6 @@ function transform(obj: any, groups?: string[], version?: string, stack?: Set<an
     if (shouldAdd(obj, excludeMap, exposeMap, beforeMap, afterMap, groupsMap, strategy, key, groups, version)) {
       if (Array.isArray(obj[key])) {
         json[name] = transformArray(obj[key], groups, version, mySet);
-        // .filter((elm: any) => elm !== Detector.CIRCULAR_REFERENCE);
       } else if (isObject(obj[key])) {
         const transformed = transform(obj[key], groups, version, mySet);
         if (transformed !== Detector.CIRCULAR_REFERENCE) {
