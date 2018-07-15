@@ -1,6 +1,6 @@
 {
   "name": "typeserializer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "TypeSerializer, designed to make prettier code while using exclusion strategies on objects.",
   "main": "dist/index.js",
   "scripts": {
