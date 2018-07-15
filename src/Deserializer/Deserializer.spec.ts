@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { deserialize } from './Deserializer';
 import { Type } from '../';
 
-const fixtureDate = new Date(2018, 6, 15, 8, 35, 3);
 const fixtureSimple =
   '{"firstName":"Dan","lastName":"Revah","age":28,"isHere":true,"birthDate":"2018-07-15T05:35:03.000Z"}';
 const fixtureChild = `{"child":${fixtureSimple}}`;
@@ -39,7 +38,7 @@ describe('Deserializer', () => {
     expect(simple.lastName).to.equal('Revah');
     expect(simple.age).to.equal(28);
     expect(simple.isHere).to.equal(true);
-    expect(simple.birthDate.getTime()).to.equal(fixtureDate.getTime());
+    expect(simple.birthDate).instanceof(Date);
   });
 
   it('should equal with child hierarchy', () => {
@@ -50,7 +49,7 @@ describe('Deserializer', () => {
     expect(simple.child.lastName).to.equal('Revah');
     expect(simple.child.age).to.equal(28);
     expect(simple.child.isHere).to.equal(true);
-    expect(simple.child.birthDate.getTime()).to.equal(fixtureDate.getTime());
+    expect(simple.child.birthDate).instanceof(Date);
   });
 
   it('should equal with array as child hierarchy', () => {
@@ -61,14 +60,14 @@ describe('Deserializer', () => {
     expect(simple.children[0].lastName).to.equal('Revah');
     expect(simple.children[0].age).to.equal(28);
     expect(simple.children[0].isHere).to.equal(true);
-    expect(simple.children[0].birthDate.getTime()).to.equal(fixtureDate.getTime());
+    expect(simple.children[0].birthDate).instanceof(Date);
 
     expect(simple.children[1]).to.be.instanceof(Simple);
     expect(simple.children[1].firstName).to.equal('Dan');
     expect(simple.children[1].lastName).to.equal('Revah');
     expect(simple.children[1].age).to.equal(28);
     expect(simple.children[1].isHere).to.equal(true);
-    expect(simple.children[1].birthDate.getTime()).to.equal(fixtureDate.getTime());
+    expect(simple.children[1].birthDate).instanceof(Date);
   });
 
   it('should throw an error if have more than once value in @Type array annotation', () => {
