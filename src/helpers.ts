@@ -13,6 +13,7 @@ export function versionCompare(v1: any, v2: any, options: any = {}) {
     v1parts = v1.split('.'),
     v2parts = v2.split('.');
 
+  /* istanbul ignore next */
   function isValidPart(x: string) {
     return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
   }
@@ -48,5 +49,6 @@ export function versionCompare(v1: any, v2: any, options: any = {}) {
     return v1parts[i] > v2parts[i] ? 1 : -1;
   }
 
+  /* istanbul ignore next */
   return v1parts.length === v2parts.length ? 0 : -1;
 }
