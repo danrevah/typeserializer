@@ -208,10 +208,10 @@ It's also possible to use a custom serializer, in-case you have any 'special' ty
 For example you could deserialize *to* a Moment instance using the `@Deserializer()` annotation.
 
 ```typescript
-import {Serializer, deserialize} from 'typeserializer';
+import {Deserializer, deserialize} from 'typeserializer';
 
-class SerializerTest {
-  @Serializer((m: string): any => Moment(m))
+class DeserializerTest {
+  @Deserializer((m: string): any => Moment(m))
   date: Moment;
 }
 ``` 
