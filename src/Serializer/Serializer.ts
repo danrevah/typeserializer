@@ -1,6 +1,7 @@
 import {
   AfterSymbol,
-  BeforeSymbol, Detector,
+  BeforeSymbol,
+  Detector,
   ExcludeSymbol,
   ExclusionPolicy,
   ExposeSymbol,
