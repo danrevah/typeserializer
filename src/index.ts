@@ -1,5 +1,6 @@
 // Methods
 export { serialize } from './Serializer/Serializer';
+export { deserialize } from './Deserializer/Deserializer';
 
 // Enums
 export { ExclusionPolicy } from './consts';
