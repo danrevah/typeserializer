@@ -4,7 +4,7 @@
 <br/>
 <a href="https://www.npmjs.com/package/typeserializer"><img src="https://img.shields.io/npm/v/typeserializer.svg?style=flat-square" alt="npm"></a>
 <a href="https://travis-ci.org/danrevah/typeserializer"><img src="https://travis-ci.org/danrevah/typeserializer.svg?branch=master" alt="Build Status"></a>
-<a href='https://coveralls.io/github/danrevah/typeserializer?branch=master'><img src='https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg?branch=master' alt='Coverage Status' /></a>
+<a href='https://coveralls.io/github/danrevah/typeserializer'><img src='https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg' alt='Coverage Status' /></a>
 <a href="https://github.com/danrevah/typeserializer/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT licensed"></a>
 <br/><br/>
 TypeSerializer, designed to make prettier code while using exclusion strategies on objects. 
