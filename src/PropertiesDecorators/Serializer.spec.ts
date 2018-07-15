@@ -4,20 +4,18 @@ import { Serializer } from './Serializer';
 import { SerializerSymbol } from '../consts';
 
 class Foo {
-  @Serializer((value: any) => 'propName' + value)
+  @Serializer(() => true)
   prop = 'prop';
-
   prop2 = 'prop2';
-
-  @Serializer((value: any) => 'propName' + value)
   prop3 = 'prop3';
 }
 
+/* istanbul ignore next */
 function declareClass() {
   /* istanbul ignore next */
   class tmp {
-    @Serializer((value: any) => 'propName' + value)
-    @Serializer((value: any) => 'propName' + value)
+    @Serializer(() => true)
+    @Serializer(() => true)
     prop3 = 'prop3';
   }
 
@@ -31,7 +29,7 @@ describe('Serializer', () => {
     const metadata = Reflect.getMetadata(SerializerSymbol, foo);
 
     expect(metadata.prop).to.be.instanceof(Function);
-    expect(metadata.prop3).to.be.instanceof(Function);
+    expect(metadata.prop()).to.be.true;
   });
 
   it('should not add metadata twice, it should throws an exception instead', () => {

@@ -4,20 +4,18 @@ import { Deserializer } from './Deserializer';
 import { DeserializerSymbol } from '../consts';
 
 class Foo {
-  @Deserializer((value: any) => 'propName' + value)
+  @Deserializer(() => true)
   prop = 'prop';
-
   prop2 = 'prop2';
-
-  @Deserializer((value: any) => 'propName' + value)
   prop3 = 'prop3';
 }
 
+/* istanbul ignore next */
 function declareClass() {
   /* istanbul ignore next */
   class tmp {
-    @Deserializer((value: any) => 'propName' + value)
-    @Deserializer((value: any) => 'propName' + value)
+    @Deserializer(() => true)
+    @Deserializer(() => true)
     prop3 = 'prop3';
   }
 
@@ -31,7 +29,7 @@ describe('Deserializer', () => {
     const metadata = Reflect.getMetadata(DeserializerSymbol, foo);
 
     expect(metadata.prop).to.be.instanceof(Function);
-    expect(metadata.prop3).to.be.instanceof(Function);
+    expect(metadata.prop()).to.be.true;
   });
 
   it('should not add metadata twice, it should throws an exception instead', () => {
