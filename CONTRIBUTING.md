@@ -6,7 +6,7 @@
 1. Clone the project, and install dependencies.
 
 ```bash
-$ git clone https://github.com/danrevah/ngx-pipes.git
+$ git clone https://github.com/danrevah/typeserializer.git
 $ npm install
 ```
 
