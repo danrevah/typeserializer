@@ -114,7 +114,7 @@ class TwoLevelsArray {
   }
 }
 
-describe("Expose", () => {
+describe("Serializer", () => {
   it("should expose properties while serializing", () => {
     const foo = new Foo();
     expect(serialize(foo)).to.equal('{"foo":"prop","prop2":"prop2","prop3":"prop3"}');
