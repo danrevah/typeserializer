@@ -21,9 +21,10 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
     - [Groups](#groups)
     - [Deep Objects](#deep-objects)
     - [Version](#version)
-    - [Custom Serializer](#custom-serializer)
     - [Dynamic Exclusion](#dynamic-exclusion)
-    - [DeSerializer](#deserializer)
+    - [Deserializer](#deserializer)
+    - [Custom Deserializer](#custom-deserializer)
+    - [Custom Serializer](#custom-serializer)
 
 ## Installation
 
@@ -200,14 +201,14 @@ You can also serialize a property by version number with @Before & @After.
  console.log(serialize(user, [], '1.3.0')); // prints: '{ fullName: 'Dan Revah' }'
 ```
 
-#### Custom DeSerializer
+#### Custom Deserializer
 
 It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
 
 For example you could serialize to a Moment instance using the `@Serializer()` annotation.
 
 ```typescript
-import {Serializer, serialize} from 'typeserializer';
+import {Serializer, deserialize} from 'typeserializer';
 
 class SerializerTest {
   @Serializer((m: Moment): any => m.format('LLLL'))
@@ -264,7 +265,7 @@ import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
  console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
 ``` 
 
-#### DeSerializer
+#### Deserializer
 
 TypeSerializer also contains a `deserialize()` method, to deserialize JSON to objects.
 
