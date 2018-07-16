@@ -235,7 +235,6 @@ TypeSerializer also contains a `deserialize()` method, to deserialize JSON to ob
 
 This will require adding a `@Type` annotation to the 'complex' type properties including `Date`.  
 
-
 ```typescript
 import {deserialize, Type} from 'typeserializer';
 
@@ -252,6 +251,10 @@ class Simple {
 
   @Type(Date)
   birthDate: Date;
+  
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
 }
 
 class SimpleChild {
@@ -260,11 +263,16 @@ class SimpleChild {
 }
 
 class SimpleChildArr {
-  @Type([Simple]) 
+  @Type([Simple])  // You must wrap with '[]' when defining an array of a type.
   children: Simple[];
 }
 
- console.log(deserialize(fixtureSimple, Simple)); // Simple { firstName: "Dan", ... }
+const simple = deserialize(fixtureSimple, Simple);
+
+ console.log(simple); // Simple { firstName: "Dan", ... }
+ console.log(simple.getFullName()); // Now you can even use class methods! -> Prints 'Dan Revah'. 
+ 
+ 
  console.log(deserialize(fixtureChild, SimpleChild)); // SimpleChild { child: Simple { firstName: "Dan", ... } }
  console.log(deserialize(fixtureChildren, SimpleChildArr)); // SimpleChildArr { children: [Simple { ... }, Simple { ... }] }
 
