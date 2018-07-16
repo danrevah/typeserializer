@@ -280,7 +280,7 @@ const simple: Simple = deserialize(fixtureSimple, Simple);
 
 #### Custom Deserializer
 
-It's also possible to use a custom serializer, in-case you have any 'special' types you want to handle.
+It's also possible to use a custom deserializer, in-case you have any 'special' types you want to handle.
 
 For example you could deserialize *to* a Moment instance using the `@Deserializer()` annotation.
 
@@ -313,11 +313,14 @@ For example you could serialize *from* a Moment instance using the `@Serializer(
 ```typescript
 import {Serializer, serialize} from 'typeserializer';
 
-class SerializerTest {
+class Bar {
   @Serializer((m: Moment): any => m.format('LLLL'))
   date: Moment;
 }
 
+const bar: Bar = serialize(fixture, Bar);
+
+console.log(foo.getDate()); // '21-12-2012'
 
 
 ``` 
