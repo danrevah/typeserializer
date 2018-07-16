@@ -267,12 +267,12 @@ class SimpleChildArr {
   children: Simple[];
 }
 
-const simple = deserialize(fixtureSimple, Simple);
+const simple: Simple = deserialize(fixtureSimple, Simple);
 
  console.log(simple); // Simple { firstName: "Dan", ... }
  console.log(simple.getFullName()); // Now you can even use class methods! -> Prints 'Dan Revah'. 
  
- 
+
  console.log(deserialize(fixtureChild, SimpleChild)); // SimpleChild { child: Simple { firstName: "Dan", ... } }
  console.log(deserialize(fixtureChildren, SimpleChildArr)); // SimpleChildArr { children: [Simple { ... }, Simple { ... }] }
 
@@ -287,10 +287,21 @@ For example you could deserialize *to* a Moment instance using the `@Deserialize
 ```typescript
 import {Deserializer, deserialize} from 'typeserializer';
 
-class DeserializerTest {
+const fixture = '{"date":"2012-12-21T00:00:00"}';
+
+class Foo {
   @Deserializer((m: string): any => Moment(m))
   date: Moment;
+  
+  getDate() {
+    return this.date.format('DD-MM-YYYY');  
+  }
+  
 }
+
+const foo: Foo = deserialize(fixture, Foo);
+
+console.log(foo.getDate()); // '21-12-2012'
 ``` 
 
 #### Custom Serializer
@@ -306,5 +317,7 @@ class SerializerTest {
   @Serializer((m: Moment): any => m.format('LLLL'))
   date: Moment;
 }
- 
+
+
+
 ``` 
