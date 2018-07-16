@@ -314,13 +314,15 @@ For example you could serialize *from* a Moment instance using the `@Serializer(
 import {Serializer, serialize} from 'typeserializer';
 
 class Bar {
-  @Serializer((m: Moment): any => m.format('LLLL'))
+  @Serializer((m: Moment): any => m.format('DD-MM-YYYY'))
   date: Moment;
 }
 
-const bar: Bar = serialize(fixture, Bar);
+const bar: Bar = new Bar();
 
-console.log(foo.getDate()); // '21-12-2012'
+bar.date = Moment('2012-12-21T00:00:00');
+
+console.log(serialize(bar)); // {"date":"21-12-2012"}
 
 
 ``` 
