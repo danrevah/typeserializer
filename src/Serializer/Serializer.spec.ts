@@ -20,6 +20,16 @@ class Foo {
   prop3: string = 'prop3';
 }
 
+@Strategy(ExclusionPolicy.ALL)
+class FooTest {
+  @Expose()
+  roles: string[] = ['ROLE_USER', 'ROLE_ADMIN'];
+  @Expose()
+  nums: string[] = [1,2,3];
+  @Expose()
+  nulls: string[] = [null,null];
+}
+
 class Bar {
   @Groups(['special'])
   @Name('bar')
@@ -243,5 +253,11 @@ describe('Serializer', () => {
     const test = new SerializerTest();
 
     expect(serialize(test)).to.equal('{"name":"foo-test"}');
+  });
+
+  it('should serialize array', () => {
+    const test = new FooTest();
+
+    expect(serialize(test)).to.equal('{"roles":["ROLE_USER","ROLE_ADMIN"]}');
   });
 });

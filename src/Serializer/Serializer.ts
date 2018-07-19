@@ -28,6 +28,10 @@ function transformArray(arr: any[], groups?: string[], version?: string, stack?:
 }
 
 function transform(obj: any, groups?: string[], version?: string, stack?: Set<any>) {
+  if (typeof obj !== 'object') {
+    return obj;
+  }
+
   const excludeMap = Reflect.getMetadata(ExcludeSymbol, obj) || {};
   const exposeMap = Reflect.getMetadata(ExposeSymbol, obj) || {};
   const groupsMap = Reflect.getMetadata(GroupsSymbol, obj) || {};
