@@ -28,7 +28,7 @@ function transformArray(arr: any[], groups?: string[], version?: string, stack?:
 }
 
 function transform(obj: any, groups?: string[], version?: string, stack?: Set<any>) {
-  if (typeof obj !== 'object') {
+  if (typeof obj !== 'object' || obj === null) {
     return obj;
   }
 
