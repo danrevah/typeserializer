@@ -22,12 +22,9 @@ class Foo {
 
 @Strategy(ExclusionPolicy.ALL)
 class FooTest {
-  @Expose()
-  roles: string[] = ['ROLE_USER', 'ROLE_ADMIN'];
-  @Expose()
-  nums: string[] = [1,2,3];
-  @Expose()
-  nulls: string[] = [null,null];
+  @Expose() roles: string[] = ['ROLE_USER', 'ROLE_ADMIN'];
+  @Expose() nums: number[] = [1, 2, 3];
+  @Expose() nulls: any[] = [null, null];
 }
 
 class Bar {
