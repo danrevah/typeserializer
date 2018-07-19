@@ -255,6 +255,6 @@ describe('Serializer', () => {
   it('should serialize array', () => {
     const test = new FooTest();
 
-    expect(serialize(test)).to.equal('{"roles":["ROLE_USER","ROLE_ADMIN"]}');
+    expect(serialize(test)).to.equal('{"roles":["ROLE_USER","ROLE_ADMIN"],"nums":[1,2,3],"nulls":[null,null]}');
   });
 });
