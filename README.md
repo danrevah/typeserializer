@@ -42,7 +42,7 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
 and import it somewhere in the global place of your app (for example in index.ts):
 
 ```typescript
-import "reflect-metadata";
+import 'reflect-metadata';
 ```
 
 ### Decorators
