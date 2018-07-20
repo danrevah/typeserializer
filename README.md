@@ -27,10 +27,22 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
 
 ## Installation
 
-Install using npm: 
+1. Install using npm: 
 
 ```
  $ npm install typeserializer --save
+```
+
+2. You also need to install reflect-metadata shim:
+
+```
+ $ npm install reflect-metadata --save
+```
+
+and import it somewhere in the global place of your app (for example in index.ts):
+
+```typescript
+import "reflect-metadata";
 ```
 
 ### Decorators
