@@ -20,7 +20,7 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
     - [Name](#name)
     - [Groups](#groups)
     - [Version](#version)
-    - [Type / Deserializer](#type)
+    - [Type](#type)
  - [Deep Objects](#deep-objects)
  - [Custom Deserializer](#custom-deserializer)
  - [Custom Serializer](#custom-serializer)
