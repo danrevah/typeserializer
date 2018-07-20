@@ -349,10 +349,10 @@ class Bar {
 
 const bar: Bar = new Bar();
 bar.date = Moment('2012-12-21T00:00:00');
-console.log(serialize(bar)); // {"date":"21-12-2012"}
+const json = serialize(bar);
+console.log(json); // {"date":"21-12-2012"}
 
-const fixture = '{"date":"2012-12-21T00:00:00"}';
-const bar2: Bar = deserialize(fixture, Bar);
+const bar2: Bar = deserialize(json, Bar);
 console.log(bar2.getDate()); // '21-12-2012'
 
 ``` 
