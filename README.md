@@ -14,11 +14,9 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
 ## Table of contents
 
  - [Installation](#installation)
- - [Strategies](#strategies)
-    - [Manual Exclude](#manual-exclude)
-    - [Exclude All](#exclude-all)
-    - [Dynamic Exclusion](#dynamic-exclusion)
  - [Decorators](#decorators)
+    - [Exclude](#exclude)
+    - [Expose](#expose)
     - [Name](#name)
     - [Groups](#groups)
     - [Version](#version)
@@ -35,9 +33,9 @@ Install using npm:
  $ npm install typeserializer --save
 ```
 
-### Strategies
+### Decorators
 
-#### Manual Exclude
+#### Exclude
  
  While using the default manual exclude you only need to decorate the properties you like to exclude with `@Exclude`.
  This will cause the property to be EXCLUDED from the response.
@@ -58,14 +56,14 @@ Install using npm:
  console.log(serialize(user)); // prints: '{ name: 'dan' }'
 ````
 
-#### Exclude All
+#### Expose
  
  Using `all` as the exclusion strategy will exclude all properties except for those marked as `@Expose()`.
  
 ```typescript
  import {serialize, Expose, Strategy, ExclusionPolicy} from 'typeserializer';
 
- @Strategy(ExclusionPolicy.ALL)
+ @Strategy(ExclusionPolicy.ALL) // <-- This is Required!
  class User {
    @Expose()
    name = 'dan';
@@ -77,7 +75,7 @@ Install using npm:
  console.log(serialize(user)); // prints: '{ name: 'dan' }'
 ````
 
-#### Dynamic Exclusion
+#### Expose - Dynamic Exclusion
 
 If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
 
@@ -104,8 +102,6 @@ import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
  const foo = new Foo();
  console.log(serialize(foo)); // prints: '{ prop2: 10, prop3: 8 }'
 ``` 
-
-### Decorators
 
 #### Name
 
