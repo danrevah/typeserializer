@@ -15,16 +15,17 @@ TypeSerializer, designed to make prettier code while using exclusion strategies 
 
  - [Installation](#installation)
  - [Strategies](#strategies)
-    - [Name](#name)
     - [Manual Exclude](#manual-exclude)
     - [Exclude All](#exclude-all)
-    - [Groups](#groups)
-    - [Deep Objects](#deep-objects)
-    - [Version](#version)
     - [Dynamic Exclusion](#dynamic-exclusion)
-    - [Deserializer](#deserializer)
-    - [Custom Deserializer](#custom-deserializer)
-    - [Custom Serializer](#custom-serializer)
+ - [Decorators](#decorators)
+    - [Name](#name)
+    - [Groups](#groups)
+    - [Version](#version)
+ - [Deep Objects](#deep-objects)
+ - [Deserializer](#deserializer)
+ - [Custom Deserializer](#custom-deserializer)
+ - [Custom Serializer](#custom-serializer)
 
 ## Installation
 
@@ -35,26 +36,6 @@ Install using npm:
 ```
 
 ### Strategies
-
-#### Name
-
-Changing name of a selected property is supported by using the `@Name` decorator.
-
-```typescript
- import {serialize, Name} from 'typeserializer';
-
- class SomeObject {
- 
-   foo = 'foo';
-   
-   @Name('two')
-   bar = 'bar';
- }
- 
- const obj = new SomeObject();
- console.log(serialize(obj)); // prints: '{ two: 'bar' }'
-````
-
 
 #### Manual Exclude
  
@@ -95,6 +76,55 @@ Changing name of a selected property is supported by using the `@Name` decorator
  
  const obj = new SomeObject();
  console.log(serialize(obj)); // prints: '{ bar: 'bar' }'
+````
+
+#### Dynamic Exclusion
+
+If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
+
+```typescript
+import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
+
+ function validator(object: any, propertyKey: string) {
+   return propertyKey === 'prop';
+ }
+ 
+@Strategy(ExclusionPolicy.ALL)
+ class Foo {
+ 
+   @Expose(validator)
+   prop = 'prop';
+ 
+   @Expose(validator)
+   prop2 = 'prop2';
+ 
+   @Expose(validator)
+   prop3 = 'prop3';
+ }
+ 
+ const foo = new Foo();
+ console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
+``` 
+
+### Decorators
+
+#### Name
+
+Changing name of a selected property is supported by using the `@Name` decorator.
+
+```typescript
+ import {serialize, Name} from 'typeserializer';
+
+ class SomeObject {
+ 
+   foo = 'foo';
+   
+   @Name('two')
+   bar = 'bar';
+ }
+ 
+ const obj = new SomeObject();
+ console.log(serialize(obj)); // prints: '{ two: 'bar' }'
 ````
 
 #### Groups
@@ -200,34 +230,6 @@ You can also serialize a property by version number with @Before & @After.
  console.log(serialize(user, [], '1.2.0')); // prints: '{ fullName: 'Dan Revah' }'
  console.log(serialize(user, [], '1.3.0')); // prints: '{ fullName: 'Dan Revah' }'
 ```
-
-#### Dynamic Exclusion
-
-If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
-
-```typescript
-import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
-
- function validator(object: any, propertyKey: string) {
-   return propertyKey === 'prop';
- }
- 
-@Strategy(ExclusionPolicy.ALL)
- class Foo {
- 
-   @Expose(validator)
-   prop = 'prop';
- 
-   @Expose(validator)
-   prop2 = 'prop2';
- 
-   @Expose(validator)
-   prop3 = 'prop3';
- }
- 
- const foo = new Foo();
- console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
-``` 
 
 #### Deserializer
 
