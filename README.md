@@ -7,7 +7,7 @@
 <a href='https://coveralls.io/github/danrevah/typeserializer'><img src='https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg' alt='Coverage Status' /></a>
 <a href="https://github.com/danrevah/typeserializer/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT licensed"></a>
 <br/><br/>
-TypeSerializer, Serializer for TypeScript. 
+TypeScript's Serializer.
 <br/><br/>
 </p> 
 
