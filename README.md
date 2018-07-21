@@ -39,7 +39,7 @@ Serializer / deserializer of typescript objects
  $ npm install reflect-metadata --save
 ```
 
-and import it somewhere in the global place of your app (for example in index.ts):
+3. Import `reflect-metadata` in a global place in your app (for ex. index.ts):
 
 ```typescript
 import 'reflect-metadata';
