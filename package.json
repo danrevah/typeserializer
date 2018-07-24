@@ -1,6 +1,6 @@
 {
   "name": "typeserializer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "TypeSerializer, designed to make prettier code while using exclusion strategies on objects.",
   "main": "dist/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "cover": "NODE_ENV=test nyc npm t && nyc report --reporter=text-lcov",
     "build:lib": "rm -rf dist && ntsc",
     "release": "standard-version",
-    "deploy": "npm run build:lib && cp package.json dist/package.json && npm publish --access=public dist",
+    "deploy": "npm run build:lib && cp package.json dist/package.json && cp README.md dist/README.md && npm publish --access=public dist",
     "precommit": "lint-staged",
     "prettier:write": "prettier --write './src/**/*.ts'",
     "prettier:check": "prettier -l './src/**/*.ts'"
