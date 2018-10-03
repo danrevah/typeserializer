@@ -14,7 +14,6 @@ function transform<T>(obj: any, classType: { new (): any }): T {
   const typeMap = Reflect.getMetadata(TypeSymbol, instance) || {};
   const deserializerMap = Reflect.getMetadata(DeserializerSymbol, instance) || {};
   const nameMap = Reflect.getMetadata(NameSymbol, instance) || {};
-  console.log(instance, obj);
   Object.keys(obj).forEach((key: string) => {
     let instanceKey = Object.keys(nameMap).find(i => nameMap[i] === key);
     if (instanceKey) instance[instanceKey] = obj[key];
