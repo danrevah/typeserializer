@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.1](https://github.com/danrevah/typeserializer/compare/v0.2.1...v0.2.2) (2018-10-03)
+This Version is Incompatible with previous versions
+* Proper serialization and deserialization based on name and property of instance
+* requires all instance property that are needed in output to have a default value
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/danrevah/typeserializer/compare/v0.1.9...v0.2.1) (2018-07-19)
 

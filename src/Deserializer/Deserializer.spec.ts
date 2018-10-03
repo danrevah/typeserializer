@@ -9,41 +9,40 @@ const fixtureChildren = `{"children":[${fixtureSimple}, ${fixtureSimple}]}`;
 const fixtureDeserialize = `{"prop":"name"}`;
 
 export class Simple {
-  firstName: string;
-  lastName: string;
-  age: number;
-  isHere: boolean;
+  firstName: string = "";
+  lastName: string = "";
+  age: number = 0;
+  isHere: boolean = false;
 
-  @Type(Date) birthDate: Date;
+  @Type(Date) birthDate: Date = new Date();
 }
 
 export class SimpleChild {
-  @Type(Simple) child: Simple;
+  @Type(Simple) child: Simple = new Simple();
 }
 
 export class SimpleChildArr {
   @Type([Simple])
-  children: Simple[];
+  children: Simple[] = [new Simple()];
 }
 
 export class CauseException {
   @Type([Simple, Simple])
-  children: Simple[];
+  children: Simple[] = [new Simple()];
 }
 
 export class Prop {
-  constructor(public name: string) {}
+  constructor(public name: string = "") {}
 }
 
 export class SimpleDeserializer {
   @Deserializer((value: string) => new Prop('my-prop-' + value))
-  prop: Prop;
+  prop: Prop = new Prop();
 }
 
 describe('Deserializer', () => {
   it('should equal basic type with primitives and Date', () => {
     const simple: Simple = deserialize(fixtureSimple, Simple);
-
     expect(simple.firstName).to.equal('Dan');
     expect(simple.lastName).to.equal('Revah');
     expect(simple.age).to.equal(28);
