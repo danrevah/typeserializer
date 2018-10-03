@@ -49,6 +49,8 @@ import 'reflect-metadata';
 
 #### Exclude
  
+* Note that if a class member does not has a default value then it will not be deserialized.
+
  While using the default manual exclude you only need to decorate the properties you like to exclude with `@Exclude`.
  This will cause the property to be EXCLUDED from the response.
  
@@ -66,7 +68,7 @@ import 'reflect-metadata';
  
  const user = new User();
  console.log(serialize(user)); // prints: '{ name: 'dan' }'
-````
+```
 
 #### Expose
  
@@ -85,7 +87,7 @@ import 'reflect-metadata';
  
  const user = new User();
  console.log(serialize(user)); // prints: '{ name: 'dan' }'
-````
+```
 
 #### Expose - Dynamic Exclusion
 
@@ -131,7 +133,7 @@ Changing name of a selected property is supported by using the `@Name` decorator
  
  const user = new User();
  console.log(serialize(user)); // prints: '{ name: 'dan' }'
-````
+```
 
 #### Groups
  
@@ -159,7 +161,7 @@ Changing name of a selected property is supported by using the `@Name` decorator
  console.log(serialize(user, ['user-account'])); // prints: '{ username: 'Dan' }'
  console.log(serialize(user, ['user-details'])); // prints: '{ age: 28 }'
  console.log(serialize(user, ['user-account', 'user-details'])); // prints: '{ username: 'Dan', age: 28 }'
-````
+```
 
 ### Deep Objects
 
