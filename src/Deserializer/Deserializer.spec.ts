@@ -9,16 +9,18 @@ const fixtureChildren = `{"children":[${fixtureSimple}, ${fixtureSimple}]}`;
 const fixtureDeserialize = `{"prop":"name"}`;
 
 export class Simple {
-  firstName: string = "";
-  lastName: string = "";
+  firstName: string = '';
+  lastName: string = '';
   age: number = 0;
   isHere: boolean = false;
 
-  @Type(Date) birthDate: Date = new Date();
+  @Type(Date)
+  birthDate: Date = new Date();
 }
 
 export class SimpleChild {
-  @Type(Simple) child: Simple = new Simple();
+  @Type(Simple)
+  child: Simple = new Simple();
 }
 
 export class SimpleChildArr {
@@ -32,7 +34,7 @@ export class CauseException {
 }
 
 export class Prop {
-  constructor(public name: string = "") {}
+  constructor(public name: string = '') {}
 }
 
 export class SimpleDeserializer {
