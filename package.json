@@ -1,6 +1,6 @@
 {
-  "name": "typeserializer",
-  "version": "0.2.1",
+  "name": "@rubix-code/typeserializer",
+  "version": "0.2.3",
   "description": "TypeSerializer, designed to make prettier code while using exclusion strategies on objects.",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danrevah/typeserializer.git"
+    "url": "git+https://github.com/rinzler-d-vicky/typeserializer.git"
   },
   "keywords": [
     "typescript",
@@ -24,12 +24,12 @@
     "decorator",
     "decorators"
   ],
-  "author": "Dan Revah",
+  "author": "Rubixcode",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danrevah/typeserializer/issues"
+    "url": "https://github.com/rinzler-d-vicky/typeserializer/issues"
   },
-  "homepage": "https://github.com/danrevah/typeserializer#readme",
+  "homepage": "https://github.com/rinzler-d-vicky/typeserializer#readme",
   "devDependencies": {
     "@types/chai": "^4.0.5",
     "@types/mocha": "^2.2.44",
