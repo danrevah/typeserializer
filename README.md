@@ -46,14 +46,14 @@ import 'reflect-metadata';
 
 #### Exclude
  
-* Note that if a class member does not has a default value then it will not be deserialized.
+* Note that if a class member does not has a default value then it may not be deserialized. Although basic testing shows that it works, it might not work in some usecase.
 
  While using the default manual exclude you only need to decorate the properties you like to exclude with `@Exclude`.
  This will cause the property to be EXCLUDED from the response.
  
  
 ```typescript
- import {serialize, Exclude} from 'typeserializer';
+ import {serialize, Exclude} from '@rubix-code/typeserializer';
 
  class User {
  
@@ -70,14 +70,18 @@ import 'reflect-metadata';
 #### Expose
  
  Using `all` as the exclusion strategy will exclude all properties except for those marked as `@Expose()`.
+
+ Even `private` and `protected` members can be exposed and used for serialization.
+ (This feature is not available in the fork source)
+* Note that not all decorators will work with private members. Please file an issue if you do.
  
 ```typescript
- import {serialize, Expose, Strategy, ExclusionPolicy} from 'typeserializer';
+ import {serialize, Expose, Strategy, ExclusionPolicy} from '@rubix-code/typeserializer';
 
  @Strategy(ExclusionPolicy.ALL) // <-- This is Required!
  class User {
    @Expose()
-   name = 'dan';
+   private name = 'dan';
    
    password = '123456';
  }
@@ -91,7 +95,7 @@ import 'reflect-metadata';
 If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
 
 ```typescript
-import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
+import {Strategy, Expose, ExclusionPolicy, serialize} from '@rubix-code/typeserializer';
 
  function validator(object: any, propertyKey: string) {
    return object[propertyKey] > 5;
@@ -119,7 +123,7 @@ import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
 Changing name of a selected property is supported by using the `@Name` decorator.
 
 ```typescript
- import {serialize, Name} from 'typeserializer';
+ import {serialize, Name} from '@rubix-code/typeserializer';
 
  class User {
  
@@ -137,7 +141,7 @@ Changing name of a selected property is supported by using the `@Name` decorator
  You can expose different properties by using the `@Groups` annotation.
  
 ```typescript
- import {Strategy, Expose, ExclusionPolicy, Groups, serialize} from 'typeserializer';
+ import {Strategy, Expose, ExclusionPolicy, Groups, serialize} from '@rubix-code/typeserializer';
 
  @Strategy(ExclusionPolicy.ALL)
  class User {
@@ -165,7 +169,7 @@ Changing name of a selected property is supported by using the `@Name` decorator
 TypeSerializer can also serialize objects deeply.
 
 ```typescript
- import {Strategy, Expose, ExclusionPolicy, Groups, serialize} from 'typeserializer';
+ import {Strategy, Expose, ExclusionPolicy, Groups, serialize} from '@rubix-code/typeserializer';
 
 @Strategy(ExclusionPolicy.ALL)
 class UserDetails {
@@ -208,7 +212,7 @@ class UserDetails {
 You can also serialize a property by version number with @Before & @After.
 
 ```typescript
- import {Strategy, Expose, ExclusionPolicy, serialize, Before, After} from 'typeserializer';
+ import {Strategy, Expose, ExclusionPolicy, serialize, Before, After} from '@rubix-code/typeserializer';
 
 @Strategy(ExclusionPolicy.ALL)
  class UserDetails {
@@ -246,7 +250,7 @@ This is very useful when you are getting a JSON string, and you know it's of a c
 
 
 ```typescript
-import {deserialize, Type} from 'typeserializer';
+import {deserialize, Type} from '@rubix-code/typeserializer';
 
 const fixtureSimple =
   '{"firstName":"Dan","lastName":"Revah","age":28,"isHere":true,"birthDate":"2018-07-15T05:35:03.000Z"}';
@@ -296,7 +300,7 @@ It's also possible to use a custom deserializer, in-case you have any 'special' 
 For example you could deserialize *to* a Moment instance using the `@Deserializer()` annotation.
 
 ```typescript
-import {Deserializer, deserialize} from 'typeserializer';
+import {Deserializer, deserialize} from '@rubix-code/typeserializer';
 
 const fixture = '{"date":"2012-12-21T00:00:00"}';
 
@@ -322,7 +326,7 @@ It's also possible to use a custom serializer, in-case you have any 'special' ty
 For example you could serialize *from* a Moment instance using the `@Serializer()` annotation.
 
 ```typescript
-import {Serializer, serialize} from 'typeserializer';
+import {Serializer, serialize} from '@rubix-code/typeserializer';
 
 class Bar {
   @Serializer((m: Moment): any => m.format('DD-MM-YYYY'))
@@ -338,7 +342,7 @@ console.log(serialize(bar)); // {"date":"21-12-2012"}
 
 And ofcourse this can be combined with the previous custom Deserializer:
 ```typescript
-import {Serializer, serialize} from 'typeserializer';
+import {Serializer, serialize} from '@rubix-code/typeserializer';
 
 class Bar {
   @Deserializer((m: string): any => Moment(m))
