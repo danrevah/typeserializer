@@ -7,56 +7,47 @@
 <a href='https://coveralls.io/github/danrevah/typeserializer'><img src='https://coveralls.io/repos/github/danrevah/typeserializer/badge.svg' alt='Coverage Status' /></a>
 <a href="https://github.com/danrevah/typeserializer/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT licensed"></a>
 <br/><br/>
-TypeSerializer, designed to make prettier code while using exclusion strategies on objects. 
+Serializer / deserializer of javascript objects
 <br/><br/>
 </p> 
 
 ## Table of contents
 
  - [Installation](#installation)
- - [Strategies](#strategies)
+ - [Decorators](#decorators)
+    - [Exclude](#exclude)
+    - [Expose](#expose)
     - [Name](#name)
-    - [Manual Exclude](#manual-exclude)
-    - [Exclude All](#exclude-all)
     - [Groups](#groups)
-    - [Deep Objects](#deep-objects)
     - [Version](#version)
-    - [Dynamic Exclusion](#dynamic-exclusion)
-    - [Deserializer](#deserializer)
-    - [Custom Deserializer](#custom-deserializer)
-    - [Custom Serializer](#custom-serializer)
+    - [Type](#type)
+ - [Deep Objects](#deep-objects)
+ - [Custom Deserializer](#custom-deserializer)
+ - [Custom Serializer](#custom-serializer)
 
 ## Installation
 
-Install using npm: 
+1. Install using npm: 
 
 ```
  $ npm install typeserializer --save
 ```
 
-### Strategies
+2. You also need to install reflect-metadata shim:
 
-#### Name
+```
+ $ npm install reflect-metadata --save
+```
 
-Changing name of a selected property is supported by using the `@Name` decorator.
+3. Import `reflect-metadata` in a global place of your app (for ex. index.ts):
 
 ```typescript
- import {serialize, Name} from 'typeserializer';
+import 'reflect-metadata';
+```
 
- class SomeObject {
- 
-   foo = 'foo';
-   
-   @Name('two')
-   bar = 'bar';
- }
- 
- const obj = new SomeObject();
- console.log(serialize(obj)); // prints: '{ two: 'bar' }'
-````
+### Decorators
 
-
-#### Manual Exclude
+#### Exclude
  
  While using the default manual exclude you only need to decorate the properties you like to exclude with `@Exclude`.
  This will cause the property to be EXCLUDED from the response.
@@ -65,36 +56,81 @@ Changing name of a selected property is supported by using the `@Name` decorator
 ```typescript
  import {serialize, Exclude} from 'typeserializer';
 
- class SomeObject {
+ class User {
  
-   foo = 'foo';
+   name = 'dan';
    
    @Exclude()
-   bar = 'bar';
+   password = '123456';
  }
  
- const obj = new SomeObject();
- console.log(serialize(obj)); // prints: '{ foo: 'foo' }'
+ const user = new User();
+ console.log(serialize(user)); // prints: '{ name: 'dan' }'
 ````
 
-#### Exclude All
+#### Expose
  
  Using `all` as the exclusion strategy will exclude all properties except for those marked as `@Expose()`.
  
 ```typescript
  import {serialize, Expose, Strategy, ExclusionPolicy} from 'typeserializer';
 
- @Strategy(ExclusionPolicy.ALL)
- class SomeObject {
- 
-   foo = 'foo';
-   
+ @Strategy(ExclusionPolicy.ALL) // <-- This is Required!
+ class User {
    @Expose()
-   bar = 'bar';
+   name = 'dan';
+   
+   password = '123456';
  }
  
- const obj = new SomeObject();
- console.log(serialize(obj)); // prints: '{ bar: 'bar' }'
+ const user = new User();
+ console.log(serialize(user)); // prints: '{ name: 'dan' }'
+````
+
+#### Expose - Dynamic Exclusion
+
+If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
+
+```typescript
+import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
+
+ function validator(object: any, propertyKey: string) {
+   return object[propertyKey] > 5;
+ }
+ 
+@Strategy(ExclusionPolicy.ALL)
+ class Foo {
+ 
+   @Expose(validator)
+   prop = 1;
+ 
+   @Expose(validator)
+   prop2 = 10;
+ 
+   @Expose(validator)
+   prop3 = 8;
+ }
+ 
+ const foo = new Foo();
+ console.log(serialize(foo)); // prints: '{ prop2: 10, prop3: 8 }'
+``` 
+
+#### Name
+
+Changing name of a selected property is supported by using the `@Name` decorator.
+
+```typescript
+ import {serialize, Name} from 'typeserializer';
+
+ class User {
+ 
+   @Name('name')
+   myName = 'dan';
+   
+ }
+ 
+ const user = new User();
+ console.log(serialize(user)); // prints: '{ name: 'dan' }'
 ````
 
 #### Groups
@@ -127,7 +163,7 @@ Changing name of a selected property is supported by using the `@Name` decorator
 
 ### Deep Objects
 
-TypeSerializer can also serialize deep objects. 
+TypeSerializer can also serialize objects deeply.
 
 ```typescript
  import {Strategy, Expose, ExclusionPolicy, Groups, serialize} from 'typeserializer';
@@ -201,45 +237,21 @@ You can also serialize a property by version number with @Before & @After.
  console.log(serialize(user, [], '1.3.0')); // prints: '{ fullName: 'Dan Revah' }'
 ```
 
-#### Dynamic Exclusion
-
-If you would like to use a dynamic approach as an exclusion strategy, you can also make use of the dynamic exclusion capability.
-
-```typescript
-import {Strategy, Expose, ExclusionPolicy, serialize} from 'typeserializer';
-
- function validator(object: any, propertyKey: string) {
-   return propertyKey === 'prop';
- }
- 
-@Strategy(ExclusionPolicy.ALL)
- class Foo {
- 
-   @Expose(validator)
-   prop = 'prop';
- 
-   @Expose(validator)
-   prop2 = 'prop2';
- 
-   @Expose(validator)
-   prop3 = 'prop3';
- }
- 
- const foo = new Foo();
- console.log(serialize(foo)); // prints: '{ prop: 'prop: }'
-``` 
-
-#### Deserializer
+#### Type
 
 TypeSerializer also contains a `deserialize()` method, to deserialize JSON to objects.
 
-This will require adding a `@Type` annotation to the 'complex' type properties including `Date`.  
+Since TypeScript doesn't transpiles types, it is a requirement to add `@Type` annotation for the 'complex' type properties, including JavaScript's `Date`.  
+
+This is very useful when you are getting a JSON string, and you know it's of a certain type.
+
 
 ```typescript
 import {deserialize, Type} from 'typeserializer';
 
 const fixtureSimple =
   '{"firstName":"Dan","lastName":"Revah","age":28,"isHere":true,"birthDate":"2018-07-15T05:35:03.000Z"}';
+  
 const fixtureChild = `{"child":${fixtureSimple}}`;
 const fixtureChildren = `{"children":[${fixtureSimple}, ${fixtureSimple}]}`;
 
@@ -323,6 +335,24 @@ const bar: Bar = new Bar();
 bar.date = Moment('2012-12-21T00:00:00');
 
 console.log(serialize(bar)); // {"date":"21-12-2012"}
+``` 
 
+And ofcourse this can be combined with the previous custom Deserializer:
+```typescript
+import {Serializer, serialize} from 'typeserializer';
+
+class Bar {
+  @Deserializer((m: string): any => Moment(m))
+  @Serializer((m: Moment): any => m.format('DD-MM-YYYY'))
+  date: Moment;
+}
+
+const bar: Bar = new Bar();
+bar.date = Moment('2012-12-21T00:00:00');
+const json = serialize(bar);
+console.log(json); // {"date":"21-12-2012"}
+
+const bar2: Bar = deserialize(json, Bar);
+console.log(bar2.getDate()); // '21-12-2012'
 
 ``` 
