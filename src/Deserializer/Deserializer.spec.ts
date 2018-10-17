@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { deserialize } from './Deserializer';
-import {Deserializer, Expose, Name, Strategy, Type} from '../';
-import {ExclusionPolicy} from '../consts';
+import { Deserializer, Expose, Name, Strategy, Type } from '../';
+import { ExclusionPolicy } from '../consts';
 
 const fixtureSimple =
   '{"firstName":"Dan","lastName":"Revah","age":28,"isHere":true,"birthDate":"2018-07-15T05:35:03.000Z"}';
@@ -43,7 +43,6 @@ export class SimpleDeserializer {
 
 @Strategy(ExclusionPolicy.ALL)
 export class Test {
-
   protected foo: any;
 
   @Expose()
@@ -107,7 +106,7 @@ describe('Deserializer', () => {
   });
 
   it('should deserialize properly on name change', () => {
-    const simpleDes: SimpleDeserializer = deserialize(JSON.stringify({newBar: '1'}), Test);
-    expect(simpleDes).to.deep.equal({bar: '1', foo: 'foo'});
+    const simpleDes: SimpleDeserializer = deserialize(JSON.stringify({ newBar: '1' }), Test);
+    expect(simpleDes).to.deep.equal({ bar: '1', foo: 'foo' });
   });
 });
