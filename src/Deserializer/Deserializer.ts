@@ -1,4 +1,4 @@
-import { DeserializerSymbol, TypeSymbol } from '../consts';
+import {DeserializerSymbol, NameSymbol, TypeSymbol} from '../consts';
 
 export function deserialize<T>(json: string, classType: T): any {
   return transform(JSON.parse(json), classType);
@@ -13,9 +13,15 @@ function transform(obj: any, classType: any) {
   const instance = new classType();
   const typeMap = Reflect.getMetadata(TypeSymbol, instance) || {};
   const deserializerMap = Reflect.getMetadata(DeserializerSymbol, instance) || {};
+  const nameMap = Reflect.getMetadata(NameSymbol, instance) || {};
+  const reverseNames = Object.keys(nameMap).reduce((o: any, key: string) => ({...o, [nameMap[key]]: key}), {});
 
   Object.keys(obj).forEach((key: string) => {
-    instance[key] = obj[key];
+    if (reverseNames.hasOwnProperty(key)) {
+      instance[reverseNames[key]] = obj[key];
+    } else {
+      instance[key] = obj[key];
+    }
 
     if (typeof deserializerMap[key] === 'function') {
       instance[key] = deserializerMap[key].call(null, instance[key], instance);
