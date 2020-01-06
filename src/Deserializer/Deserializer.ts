@@ -10,6 +10,10 @@ function transformArray(arr: any[], classType: any): any[] {
 }
 
 function transform(obj: any, classType: any) {
+  if(obj === null || obj === undefined) {
+    return obj;
+  }
+
   const instance = new classType();
   const typeMap = Reflect.getMetadata(TypeSymbol, instance) || {};
   const deserializerMap = Reflect.getMetadata(DeserializerSymbol, instance) || {};
