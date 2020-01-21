@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.5"></a>
+## [0.2.5](https://github.com/danrevah/typeserializer/compare/v0.2.4...v0.2.5) (2020-01-21)
+
+
+### Bug Fixes
+
+* **proj:** fix release script ([9b473cd](https://github.com/danrevah/typeserializer/commit/9b473cd))
+* **proj:** update typesscript ([56a8f21](https://github.com/danrevah/typeserializer/commit/56a8f21))
+
+
+
 <a name="0.2.4"></a>
 ## [0.2.4](https://github.com/danrevah/typeserializer/compare/v0.1.9...v0.2.4) (2020-01-21)
 
