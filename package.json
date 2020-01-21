@@ -7,7 +7,7 @@
     "test": "NODE_ENV=test mocha -r ts-node/register src/*.spec.ts src/**/*.spec.ts",
     "cover": "NODE_ENV=test nyc npm t && nyc report --reporter=text-lcov",
     "build:lib": "rm -rf dist && tsc",
-    "release": "standard-versioni && git push --follow-tags origin master",
+    "release": "standard-version && git push --follow-tags origin master",
     "deploy": "npm run build:lib && cp package.json dist/package.json && cp README.md dist/README.md && npm publish --access=public dist",
     "precommit": "lint-staged",
     "prettier:write": "prettier --write './src/**/*.ts'",
