@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.4"></a>
+## [0.2.4](https://github.com/danrevah/typeserializer/compare/v0.1.9...v0.2.4) (2020-01-21)
+
+
+### Bug Fixes
+
+* **#10:** derserialize is failing on non-objects types ([6ce9479](https://github.com/danrevah/typeserializer/commit/6ce9479)), closes [#10](https://github.com/danrevah/typeserializer/issues/10)
+
+
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/danrevah/typeserializer/compare/v0.1.9...v0.2.3) (2018-10-17)
 
