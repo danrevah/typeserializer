@@ -1,7 +1,8 @@
 import { DeserializerSymbol, NameSymbol, TypeSymbol } from '../consts';
+import { isObject } from '../helpers';
 
 export function deserialize<T>(json: string, classType: T): any {
-  return transform(JSON.parse(json), classType);
+  return transform(toObject(json), classType);
 }
 
 // -- Private --
@@ -10,6 +11,10 @@ function transformArray(arr: any[], classType: any): any[] {
 }
 
 function transform(obj: any, classType: any) {
+  if (!isObject(obj)) {
+    return obj;
+  }
+
   const instance = new classType();
   const typeMap = Reflect.getMetadata(TypeSymbol, instance) || {};
   const deserializerMap = Reflect.getMetadata(DeserializerSymbol, instance) || {};
@@ -50,4 +55,12 @@ function transform(obj: any, classType: any) {
   });
 
   return instance;
+}
+
+function toObject(json: string): any {
+  try {
+    return JSON.parse(json);
+  } catch (_) {
+    throw `Unable to deserialize, not a valid JSON.`;
+  }
 }

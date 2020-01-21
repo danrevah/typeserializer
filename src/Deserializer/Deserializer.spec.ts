@@ -109,4 +109,16 @@ describe('Deserializer', () => {
     const simpleDes: SimpleDeserializer = deserialize(JSON.stringify({ newBar: '1' }), Test);
     expect(simpleDes).to.deep.equal({ bar: '1', foo: 'foo' });
   });
+
+  it('should not fail when deserializing diff value then object', () => {
+    expect(deserialize('null', Test)).to.equal(null);
+    expect(deserialize('false', Test)).to.equal(false);
+    expect(deserialize('true', Test)).to.equal(true);
+    expect(deserialize('42', Test)).to.equal(42);
+  });
+
+  it('should fail if invalid JSON with appropriate error', () => {
+    expect(() => deserialize('undefined', Test)).to.throw('Unable to deserialize, not a valid JSON.');
+    expect(() => deserialize('foo', Test)).to.throw('Unable to deserialize, not a valid JSON.');
+  });
 });
